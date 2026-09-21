@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+.env
+.env.*
+!.env.example
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+*.h5ad
+*.vcc
+*.zip
+*.parquet
+work/
+notebooks/.ipynb_checkpoints/
+# Results summaries, plots, configs and provenance are deliberately tracked.

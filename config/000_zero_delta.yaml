@@ -1,0 +1,20 @@
+experiment: 000_zero_delta
+phase: validation
+seed: 2026
+assay_type: CRISPRi
+model: multinomial_control_null
+paths:
+  bundle: data/raw/validation
+  prediction: data/processed/000_zero_delta/prediction.h5ad
+  submission: data/processed/000_zero_delta/prediction.vcc
+  report: results/000_zero_delta.json
+schema:
+  contexts: [A, B, C]
+  n_genes: 18533
+  n_perturbations: 300
+  cells_per_perturbation: 400
+  max_stored_entries: 4750000000
+  max_counts_per_cell: 1000000
+generation:
+  chunk_cells: 100
+  library_size: 20000

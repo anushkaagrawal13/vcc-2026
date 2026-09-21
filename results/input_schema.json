@@ -1,0 +1,61 @@
+{
+  "panel": "vcc2026-val-1",
+  "n_genes": 18533,
+  "n_perturbations": 300,
+  "contexts": {
+    "A": {
+      "shape": [
+        18400,
+        18533
+      ],
+      "obs_columns": [
+        "target_gene",
+        "context",
+        "ntc_id"
+      ],
+      "context_labels": [
+        "A"
+      ],
+      "target_labels": [
+        "non-targeting"
+      ],
+      "gene_order_matches": true
+    },
+    "B": {
+      "shape": [
+        18400,
+        18533
+      ],
+      "obs_columns": [
+        "target_gene",
+        "context",
+        "ntc_id"
+      ],
+      "context_labels": [
+        "B"
+      ],
+      "target_labels": [
+        "non-targeting"
+      ],
+      "gene_order_matches": true
+    },
+    "C": {
+      "shape": [
+        18400,
+        18533
+      ],
+      "obs_columns": [
+        "target_gene",
+        "context",
+        "ntc_id"
+      ],
+      "context_labels": [
+        "C"
+      ],
+      "target_labels": [
+        "non-targeting"
+      ],
+      "gene_order_matches": true
+    }
+  }
+}
