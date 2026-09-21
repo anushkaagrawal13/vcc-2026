@@ -38,6 +38,15 @@ def generate(cfg):
         if not path.is_file():
             raise FileNotFoundError(f'Missing official bundle file: {path}')
         hashes[name] = sha256(path)
+    # Reserve conservatively before starting a long write. Compression is not a
+    # reliable capacity promise, so plan for uncompressed expected sparse bytes.
+    expected_nnz = sum(np.sum(-np.expm1(depth * np.log1p(-p))) for p in profiles.values())
+    expected_nnz *= len(perts) * schema['cells_per_perturbation']
+    planned_disk = int(expected_nnz * 8 * 1.1) + 512 * 1024**2
+    output.parent.mkdir(parents=True, exist_ok=True)
+    if shutil.disk_usage(output.parent).free < planned_disk:
+        raise RuntimeError(f'Generation disk preflight needs about {planned_disk / 1024**3:.1f} GiB free '
+                           '(conservative sparse estimate). Use a larger disk/host.')
     # Metadata is small; the expression matrix is never materialized in full.
     n = schema['cells_per_perturbation']
     obs = pd.DataFrame([(c, p) for c in schema['contexts'] for p in perts for _ in range(n)],
@@ -80,7 +89,7 @@ def generate(cfg):
                 print(f'Generated context {context}: {row:,} total cells', flush=True)
         summary = validate_prediction(temporary, genes, perts, schema, chunk)
         temporary.rename(output)
-    except Exception:
+    except BaseException:
         temporary.unlink(missing_ok=True)
         raise
     report = {

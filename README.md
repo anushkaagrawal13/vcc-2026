@@ -56,6 +56,13 @@ require a larger CPU machine even though streaming generation works locally.
 Keep the full cell/gene panel when moving the run; do not shrink the experiment
 to get a locally convenient but invalid submission.
 
+Current run: the validation controls are downloaded and inspected; all 10 tests
+pass. Full generation was stopped when disk space fell below 1 GiB, and its
+incomplete output was removed. There is no real submission or leaderboard score
+yet. Generation now estimates disk needs before writing. The redundant download
+zip was removed after verifying the extracted raw files; `make download` can
+retrieve it again if needed.
+
 ## Architecture and build gates
 
 | Stage | Modules | Artifact / exit condition |
