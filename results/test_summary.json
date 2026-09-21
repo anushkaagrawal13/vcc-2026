@@ -1,7 +1,8 @@
 {
   "date": "2026-09-21",
   "passed": 10,
-  "duration_seconds": 11.6,
+  "duration_seconds": 27.57,
+  "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest -q",
   "scope": "synthetic fixtures, including official vcc-cli 0.2.1 packaging; not a challenge score",
   "real_bundle_manifest_validated": true
 }

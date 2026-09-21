@@ -21,3 +21,9 @@ reached more than 4.5 GiB while free space fell below 1 GiB on an 8 GiB RAM Mac.
 See `000_zero_delta_status.json`. A conservative disk preflight now prevents this
 failure before starting another full run. Keep Session 2 deferred until this gate
 is completed on a suitable machine.
+
+The verified preflight estimates **18.8 GiB free disk for generation alone**,
+conservatively allowing for uncompressed sparse storage. Packaging needs additional
+scratch and several copies of that matrix in RAM. A host with roughly 64 GiB RAM
+and 50 GiB free disk is a sensible starting allocation; the CLI preflight checks
+the actual finished file before packaging.

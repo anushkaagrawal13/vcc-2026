@@ -7,5 +7,7 @@
   "reason": "Stopped generation when incomplete H5AD reached 4.5+ GiB and free disk fell below 1 GiB. Removed incomplete output; retained verified controls.",
   "incomplete_file_bytes_at_stop": 4959981740,
   "physical_memory_bytes": 8589934592,
+  "generation_disk_preflight_gib": 18.8,
+  "disk_preflight_verified": true,
   "next_action": "Run unchanged experiment on a host with more RAM and disk; finish official prep and submission before Session 2."
 }
