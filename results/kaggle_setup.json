@@ -1,0 +1,18 @@
+{
+  "date": "2026-09-22",
+  "notebook": "https://www.kaggle.com/code/anushkaagrawal13/vcc-2026-setup-and-resource-checks/edit",
+  "accelerator": "none",
+  "cpu_count": 4,
+  "kernel_python": "3.12.13",
+  "physical_ram_gib": 31.35,
+  "cgroup_memory_limit_gib": 30.0,
+  "working_free_gib": 19.5,
+  "ui_session_disk_limit_gib": 57.6,
+  "session_limit_hours": 12,
+  "status": "waiting_for_phone_verification_and_internet",
+  "repo_clone_executed": false,
+  "pinned_environment_installed": false,
+  "tests_executed_on_kaggle": false,
+  "vcc_secret_configured": false,
+  "note": "Resource cell executed. Clone/install/test cell prepared in notebook. Internet toggle is disabled pending phone verification. No secrets configured. Filesystem capacity reported by /tmp is not treated as the notebook quota."
+}
