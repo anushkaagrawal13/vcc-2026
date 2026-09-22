@@ -14,13 +14,13 @@
   "pinned_environment_installed": true,
   "tests_executed_on_kaggle": true,
   "vcc_secret_configured": true,
-  "note": "Authenticated in Kaggle without storing credentials; downloaded and checksummed validation controls. Full-panel resource preflight blocks generation/packaging; no submission or score.",
+  "note": "Authenticated in Kaggle without storing credentials; downloaded and checksummed validation controls. Full-panel resource preflight blocks generation/packaging; no submission or score. Updated container resource guard: 11 tests passed on Kaggle in 3.84 seconds.",
   "phone_verified": true,
   "internet_enabled": true,
   "environment_python": "3.12.2",
-  "tests_passed": 10,
-  "test_duration_seconds": 7.52,
-  "tested_commit": "d979eff2bbd2b01b90ae104e0393fccb22d5059a",
+  "tests_passed": 11,
+  "test_duration_seconds": 3.84,
+  "tested_commit": "1ab01d0",
   "validation_controls_downloaded": true,
   "validation_transport_checksum_verified": true
 }
