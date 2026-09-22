@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-22",
+  "expected_nnz": 2235889891,
+  "on_disk_matrix_gib": 16.658677836970437,
+  "generation_disk_required_gib": 18.824545620667482,
+  "working_free_gib": 18.268596649169922,
+  "cgroup_ram_gib": 30,
+  "scipy_resident_matrix_gib": 24.9880167581141,
+  "official_prep_estimated_gib_current_int32": 56.97363686785103,
+  "official_prep_estimated_gib_if_float32": 34.484421785548335,
+  "status": "blocked_before_generation",
+  "official_score": null,
+  "note": "Expected sparsity from actual controls. Above 2**31 stored entries, SciPy promotes indices to int64. Official vcc-cli 0.2.1 sizing estimates used; float32 alternative is an estimate, not an executed run. A 64 GiB host with at least 50 GiB free disk is the next target for this unchanged baseline."
+}

@@ -105,3 +105,15 @@ def test_resource_preflight_rejects_insufficient_host(experiment, monkeypatch):
     monkeypatch.setattr('src.resources.physical_memory_bytes', lambda: 1)
     with pytest.raises(RuntimeError, match='larger host'):
         require_prep_resources(experiment['paths']['prediction'], package=True)
+
+
+def test_container_memory_limit(monkeypatch):
+    from src.resources import memory_limit_bytes
+    from pathlib import Path
+    monkeypatch.setattr('src.resources.physical_memory_bytes', lambda: 64 * 1024**3)
+    def read_limit(path, *args, **kwargs):
+        if str(path) == '/sys/fs/cgroup/memory.max':
+            return str(30 * 1024**3)
+        raise FileNotFoundError(path)
+    monkeypatch.setattr(Path, 'read_text', read_limit)
+    assert memory_limit_bytes() == 30 * 1024**3

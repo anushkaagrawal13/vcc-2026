@@ -9,16 +9,18 @@
   "working_free_gib": 19.5,
   "ui_session_disk_limit_gib": 57.6,
   "session_limit_hours": 12,
-  "status": "setup_tests_passed_waiting_for_vcc_secret",
+  "status": "validation_downloaded_full_panel_blocked_by_capacity",
   "repo_clone_executed": true,
   "pinned_environment_installed": true,
   "tests_executed_on_kaggle": true,
-  "vcc_secret_configured": false,
-  "note": "CPU setup completed in Kaggle. Dependency compatibility check passed; 10 tests passed. VCC secret is still needed for authenticated data access. Filesystem capacity reported by /tmp is not treated as the notebook quota.",
+  "vcc_secret_configured": true,
+  "note": "Authenticated in Kaggle without storing credentials; downloaded and checksummed validation controls. Full-panel resource preflight blocks generation/packaging; no submission or score.",
   "phone_verified": true,
   "internet_enabled": true,
   "environment_python": "3.12.2",
   "tests_passed": 10,
   "test_duration_seconds": 7.52,
-  "tested_commit": "d979eff2bbd2b01b90ae104e0393fccb22d5059a"
+  "tested_commit": "d979eff2bbd2b01b90ae104e0393fccb22d5059a",
+  "validation_controls_downloaded": true,
+  "validation_transport_checksum_verified": true
 }
