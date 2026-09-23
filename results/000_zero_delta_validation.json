@@ -1,0 +1,52 @@
+{
+  "experiment": "000_zero_delta",
+  "status": "generated_and_schema_validated_not_packaged_or_submitted",
+  "phase": "validation",
+  "commit": "a9a1bf65aa4f9867b08574fa6b70e5e5331ebf03",
+  "model": "multinomial_control_null",
+  "assay_type": "CRISPRi",
+  "seed": 2026,
+  "library_size": 20000,
+  "panel_id": "vcc2026-val-1",
+  "schema_validation": {
+    "status": "passed",
+    "validator": "src.schema.validate_prediction",
+    "n_cells": 360000,
+    "n_genes": 18533,
+    "stored_entries": 2235911741
+  },
+  "prediction_sha256": "0e88d9cb77b0280fd445fb943dd35c6535ca98d5031b5fe3000a74cc41454708",
+  "config_sha256": "90ccb90fa1ad110b952528f5f854288b4ce73f77011a80d2f33df9d26584508e",
+  "input_sha256": {
+    "context_A.h5ad": "f22e71968487d3da9402769dcd0c73a47851fad4cd7dd25510283c923031fe3e",
+    "context_B.h5ad": "41557555b3febf6db19fd930b4dd7db88941840077bf985d14dfff959c782380",
+    "context_C.h5ad": "e090e7c7cfdd0006f689214ba38ba0cd2669578e89c9bc325b65f0bd940c02e0",
+    "gene_names.csv": "25bfa66715e186bebabce7ac788bbcea47e2bf59ca70be1f8f3a06f2f0e47201",
+    "pert_counts.csv": "f57edd7b912ebd718efc7ee9d0f334772513e7cc418d133ce525470e373b3276",
+    "manifest.json": "2c2b5d425df817ca35e9edf08282d12494ce42913ba824375bf0f98a1cc676f5"
+  },
+  "versions": {
+    "python": "3.12.13",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "anndata": "0.13.4",
+    "vcc-cli": "0.2.1"
+  },
+  "generation_runtime_seconds": 1442.427,
+  "package_preflight": {
+    "status": "blocked_by_memory_limit",
+    "estimated_peak_bytes": 61175553610,
+    "effective_memory_limit_bytes": 32212254720,
+    "scratch_needed_bytes": 27987873526,
+    "scratch_free_bytes": 1092914008064
+  },
+  "score": {
+    "official_score": null,
+    "status": "not_scored",
+    "reason": "The controls bundle has no perturbed response ground truth; the official score is available only from the challenge scorer after submission."
+  },
+  "submission": {
+    "status": "not_submitted",
+    "package_created": false
+  }
+}

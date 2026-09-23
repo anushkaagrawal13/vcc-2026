@@ -143,12 +143,15 @@ to get a locally convenient but invalid submission.
 
 - Validation controls are downloaded, checksummed and inspected. The Kaggle
   environment passes **11 tests**; see `results/kaggle_setup.json`.
-- Full-panel generation/packaging remains blocked by capacity. Kaggle exposes a
-  30 GiB container memory limit; the current official packaging estimate is about
-  57 GiB before safety headroom. See `results/kaggle_preflight.json`.
-- **No full submission or leaderboard score exists yet.** An earlier incomplete
-  local prediction was removed; disk and container-memory guards now check
-  capacity before proceeding.
+- Full-panel zero-delta generation now passes the real validation schema:
+  360,000 cells, 18,533 genes, and 2,235,911,741 stored entries. The prediction
+  checksum and input provenance are recorded in
+  `results/000_zero_delta_validation.json`.
+- Official packaging is still blocked on Kaggle: the measured peak estimate is
+  61.2 GB (57.0 GiB), against a 30 GiB container memory limit. No `.vcc` package
+  or submission was created. The controls bundle contains no perturbation
+  ground truth, so it cannot produce a local biological score; the official
+  score is returned by the challenge scorer after submission.
 - AWS signup is complete. The requested Ohio standard On-Demand quota increase
   from 5 to **16 vCPUs is pending**. No project EC2 machine has been launched.
 - Planned initial host: **128 GiB RAM, 200 GiB SSD, CPU only**, used intermittently
@@ -160,8 +163,9 @@ to get a locally convenient but invalid submission.
   the repo and call its modules; they do not contain the pipeline. Publish only
   permitted processed public-data tables as a Kaggle Dataset when ready.
 
-The next concrete milestone is the full null submission on a sufficiently large
-host, followed by recording the returned metrics in `results/`. Reassess hosting
+The next concrete milestone is to package the validated null prediction on a
+sufficiently large host, review it, and then submit it for the official score.
+Reassess hosting
 costs after measuring actual runtime and storage needs; this is an initial
 project compute plan, not a commitment to an always-on server.
 
