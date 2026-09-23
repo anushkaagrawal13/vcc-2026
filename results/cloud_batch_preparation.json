@@ -1,0 +1,25 @@
+{
+  "date": "2026-09-23",
+  "status": "prepared_rehearsal_blocked_on_local_environment",
+  "aws_launched": false,
+  "official_score": null,
+  "checks": {
+    "shell_syntax": "passed",
+    "python_syntax": "passed",
+    "runner_unit_tests": {
+      "passed": 3,
+      "duration_seconds": 3.191,
+      "covers": [
+        "checkpoint_resume_and_corruption",
+        "failed_stage_not_checkpointed",
+        "mocked_shutdown_on_success_and_failure"
+      ]
+    },
+    "full_fixture_rehearsal": "blocked loading local environment modules; earlier 11-test Kaggle result is separate evidence"
+  },
+  "remaining": [
+    "complete full fixture rehearsal",
+    "verify Linux bootstrap and actual shutdown timer on approved host",
+    "verify live quota/credits and approve spend before launch"
+  ]
+}

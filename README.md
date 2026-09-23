@@ -3,6 +3,88 @@
 CPU-first experiments for the 2026 Virtual Cell Challenge. Start with a real
 schema round-trip; only then build public-data pseudobulk models.
 
+## Initial project plan
+
+Build a reproducible, CPU-first pipeline that transfers CRISPRi responses across
+cell lines. Establish a valid submission and an honest classical baseline before
+spending time on more complex models. The primary scientific result is the
+**Replogle K562 → RPE1 holdout**, with the leaderboard used as a sanity check.
+
+### Week 0: contract and setup
+
+- Read the official rules and 2026 scoring rubric end to end; record the schema,
+  metrics, dates and submission limits in `docs/challenge-contract.md`.
+- Register for the challenge, authenticate the VCC CLI, and download/checksum the
+  validation files before designing model outputs.
+- Join the challenge Discord for announcements (completion not yet verified).
+- Set up GitHub, a pinned environment, and a phone-verified Kaggle account.
+- Keep raw/processed data and credentials out of Git. Use one `config/*.yaml` per
+  experiment; commit metrics, plots and provenance under `results/`.
+
+### Build order and acceptance criteria
+
+1. **Schema round-trip.** Generate the full zero-response count panel, validate
+   and package it with the official CLI, submit it, and commit the returned score.
+   Local format validation is not biological scoring: challenge responses are
+   hidden. Finish this gate before implementing the modeling stages.
+2. **Public-data pseudobulk.** Start with Replogle 2022. Compute mean expression
+   deltas for each (cell line, perturbation) against matched non-targeting
+   controls, preserving batch/guide provenance and documenting normalization.
+   Save a tidy training table and retain held-out cells for DE evaluation.
+3. **Three initial feature families.** Target-gene baseline expression in the
+   destination line; target-gene mean expression across training lines; and
+   GO/STRING neighbor-response priors calculated from training outcomes only.
+   Begin with the first feature alone.
+4. **Classical models.** Fit ridge per output gene, then LightGBM. Compare both
+   with zero-delta and nearest-line baselines using identical splits and metrics.
+   Add Adamson 2016 after the Replogle-only experiment works.
+5. **Honest validation.** Train on K562 and evaluate on untouched RPE1. Select
+   features and hyperparameters using K562-only folds. RPE1 baseline controls may
+   inform destination-line features; RPE1 perturbation outcomes must not enter
+   fitting, priors or tuning. Report shared-target and unseen-target cohorts,
+   mean-response diagnostics and the official six-metric evaluation separately.
+6. **Ablate and freeze.** Compare feature families, datasets and the count
+   generator. Freeze the pipeline by mid-October. Reserve October 22–November 5
+   for executing the finished pipeline on the test set and checking submissions.
+
+**Assay policy:** Adamson 2016 and Replogle 2022 are CRISPRi. Norman 2019 is
+CRISPRa and is excluded from the initial training set. Any later use requires an
+explicit assay-type feature, a separate task and validation; never silently pool
+activation and repression.
+
+### Optional hybrid extension, after the classical baseline
+
+Treat deep learning as a testable extension: add frozen gene/cell embeddings to
+ridge or LightGBM, or fit a small residual model on top of the classical
+prediction. Compare against the same untouched holdout and retain the extension
+only if it improves the relevant metrics. Arc Virtual Cell Atlas is a candidate
+source of representations or training data, subject to rule, license, assay and
+leakage checks; using it is not yet an implemented or validated approach.
+
+A separate count-generation adapter must turn predicted means into new raw-count
+cells. After the multinomial null, evaluate a generator that also models
+biological dispersion, since four rubric metrics depend on differential
+expression. Improved mean predictions alone do not establish a better submission.
+
+### First three working sessions
+
+| Session | Deliverable |
+|---|---|
+| 1 | Registration/rubric review, scaffold, full zero-delta submission and recorded score |
+| 2 | Replogle pseudobulk, one-feature ridge, K562 → RPE1 holdout and baseline comparisons |
+| 3 | Adamson, remaining features, LightGBM and the first comparative results table |
+
+These are ordered milestones, not claims that all three sessions are complete.
+
+## Prepared cloud batch
+
+See [the first-cloud-run checklist](docs/first-cloud-run.md) before launching.
+`bash scripts/rehearse.sh` runs the synthetic round-trip and checkpoint tests.
+On an approved EC2 host, `scripts/run-on-ec2.sh` sets a shutdown deadline, installs
+the environment and runs the checkpointed download → generate → validate →
+package batch. It stops on completion/failure; submission is a separate action.
+No instance has been launched by these preparation steps.
+
 ## Start here
 
 The repo is open in VS Code. A local `.venv` contains Python 3.12.2 and the
@@ -17,8 +99,9 @@ make test
 To recreate elsewhere, use `conda env create -f environment.yml`, activate
 `vcc-2026`, and run Make with `PYTHON=python`. Alternatively create a Python
 3.12.2 virtual environment and `pip install -r requirements.lock.txt`.
-Every dependency, including transitive packages, is pinned. The environment was
-tested on macOS; Linux/Kaggle installation remains to be verified.
+The environment and lockfile pin the declared dependencies. Linux/Kaggle
+installation has been verified with Python 3.12.2; platform-specific transitive
+dependencies should be recorded when reproducing on another host.
 
 ## Session 1 workflow
 
@@ -56,12 +139,31 @@ require a larger CPU machine even though streaming generation works locally.
 Keep the full cell/gene panel when moving the run; do not shrink the experiment
 to get a locally convenient but invalid submission.
 
-Current run: the validation controls are downloaded and inspected; all 10 tests
-pass. Full generation was stopped when disk space fell below 1 GiB, and its
-incomplete output was removed. There is no real submission or leaderboard score
-yet. Generation now estimates disk needs before writing. The redundant download
-zip was removed after verifying the extracted raw files; `make download` can
-retrieve it again if needed.
+## Current status and compute plan (September 22, 2026)
+
+- Validation controls are downloaded, checksummed and inspected. The Kaggle
+  environment passes **11 tests**; see `results/kaggle_setup.json`.
+- Full-panel generation/packaging remains blocked by capacity. Kaggle exposes a
+  30 GiB container memory limit; the current official packaging estimate is about
+  57 GiB before safety headroom. See `results/kaggle_preflight.json`.
+- **No full submission or leaderboard score exists yet.** An earlier incomplete
+  local prediction was removed; disk and container-memory guards now check
+  capacity before proceeding.
+- AWS signup is complete. The requested Ohio standard On-Demand quota increase
+  from 5 to **16 vCPUs is pending**. No project EC2 machine has been launched.
+- Planned initial host: **128 GiB RAM, 200 GiB SSD, CPU only**, used intermittently
+  for packaging and larger preprocessing jobs. Confirm the instance type, live
+  regional price and spending limit before launching. Configure automatic stop
+  and billing alerts; alerts are not a spending cap, and retained storage remains
+  billable while compute is stopped.
+- Keep Kaggle for lightweight experiments and optional GPU work. Notebooks clone
+  the repo and call its modules; they do not contain the pipeline. Publish only
+  permitted processed public-data tables as a Kaggle Dataset when ready.
+
+The next concrete milestone is the full null submission on a sufficiently large
+host, followed by recording the returned metrics in `results/`. Reassess hosting
+costs after measuring actual runtime and storage needs; this is an initial
+project compute plan, not a commitment to an always-on server.
 
 ## Architecture and build gates
 
@@ -110,9 +212,19 @@ zero-score anchor.
 5. Ablate and freeze by mid-October. Test data arrive October 22; the final deadline
    is November 5, 2026, 23:59 UTC. Only the last final submission counts for prizes.
 
-Kaggle is optional for this CPU-first starting point. Account setup/phone
-verification is still a user action. Later upload only processed public-data
-tables as a Kaggle Dataset; use a thin notebook that imports this repository.
+Kaggle account setup and phone verification are complete. Its tested notebook
+is a thin setup/resource-check wrapper; full-panel packaging needs the larger
+CPU host described above.
 
 See [challenge notes](docs/challenge-contract.md), [data policy](docs/data-policy.md)
 and [results](results/README.md).
+
+## Prepared first cloud batch
+
+See [the first-run runbook](docs/first-cloud-run.md) for the launch checklist,
+boot-time shutdown timer, secure token entry, checkpoint recovery and artifact
+export. Run `bash scripts/rehearse.sh` for the synthetic official-CLI round-trip.
+`bash scripts/setup.sh` installs the pinned environment; `python -m src.run`
+runs the checkpointed download/generate/validate/package pipeline.
+The EC2-only `scripts/run-on-ec2.sh` adds automatic shutdown; never use it for
+local rehearsal. Submission remains an explicit separate command.

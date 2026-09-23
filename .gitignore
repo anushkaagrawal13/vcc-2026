@@ -17,3 +17,5 @@ data/processed/*
 work/
 notebooks/.ipynb_checkpoints/
 # Results summaries, plots, configs and provenance are deliberately tracked.
+# Operational logs may contain signed download URLs; publish sanitized summaries only.
+logs/
