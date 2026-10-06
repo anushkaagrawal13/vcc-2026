@@ -54,3 +54,13 @@ direction fidelity, supporting evaluation of count-distribution calibration as
 well as mean deltas in later experiments. A negative overall score is compatible
 with this baseline: the rubric's zero anchor is a mean-perturbation-response
 model, not this control-only multinomial model.
+
+## Replogle preprocessing recovery status
+
+The initial CloudShell run has no recoverable outputs. K562 passed its publisher
+MD5 check, but after the environment restarted both temporary logs were gone
+and the experiment S3 prefix was empty. RPE1 completion and pseudobulk generation
+cannot be confirmed. See `001_replogle_pseudobulk/status.json`. The 18 passing
+tests validate the implementation, not completion on the real data. A rerun must
+checkpoint each source and line immediately, rather than defer all backup until
+the full batch finishes. No EC2 instance was launched for this attempt.
