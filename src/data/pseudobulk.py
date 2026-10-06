@@ -196,6 +196,7 @@ def main():
                             versions={name: version(name) for name in ['numpy','pandas','scipy','h5py','pyarrow','indexed-gzip']})
         (reports / (source['line']+'_qc.json')).write_text(json.dumps(result['qc'], indent=2)+'\n')
         print(json.dumps({'event':'complete', 'line':source['line'], 'rows':result['qc']['tidy_rows']}), flush=True)
+        del result  # Do not retain K562 matrices while allocating RPE1 aggregates.
     if set(axes) == {'K562', 'RPE1'}:
         train, held = set(axes['K562']['target_ids']), set(axes['RPE1']['target_ids'])
         cohort = {'shared_target_ids': sorted(train & held), 'RPE1_unseen_target_ids': sorted(held-train),
