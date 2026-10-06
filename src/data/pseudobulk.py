@@ -76,8 +76,16 @@ def aggregate(path, cfg, source):
             raise ValueError('Control symbol and ID disagree')
         if not np.all(np.isfinite(libraries) & (libraries > 0)):
             raise ValueError('Missing or nonpositive library sizes')
-        if not np.all(np.char.startswith(ids[~control], 'ENSG')):
+        missing_id = (~control) & np.isin(np.char.lower(ids), ['', 'nan', 'none'])
+        unresolved = [dict(symbol=s, cells=int(((targets == s) & missing_id).sum()))
+                      for s in sorted(set(targets[missing_id]))]
+        if any(not x['symbol'].strip() for x in unresolved):
+            raise ValueError('Missing target symbol and identifier')
+        if not np.all(np.char.startswith(ids[(~control) & (~missing_id)], 'ENSG')):
             raise ValueError('Unexpected target gene identifier')
+        # Preserve missing-ID targets without guessing mappings or merging all NaNs.
+        ids = np.array(['UNMAPPED:' + s if m else i
+                        for i, s, m in zip(ids, targets, missing_id)])
         batch_names, batch_index = np.unique(batches, return_inverse=True)
         control_counts = np.bincount(batch_index[control], minlength=len(batch_names))
         if np.any(control_counts < cfg['minimum_controls_per_batch']):
@@ -118,6 +126,7 @@ def aggregate(path, cfg, source):
         qc = {'dataset': source['dataset'], 'line': source['line'], 'role': source['role'],
               'n_cells': len(targets), 'n_control_cells': int(control.sum()), 'n_target_cells': int((~control).sum()),
               'n_targets': nt, 'n_unique_target_ids': len(set(i for i, _ in pairs)),
+              'unmapped_target_symbols': unresolved, 'n_unmapped_target_cells': int(missing_id.sum()),
               'n_output_genes': ng, 'n_gem_groups': nb, 'minimum_controls_per_gem': int(control_counts.min()),
               'min_target_cells': int(n.min()), 'min_guide_pairs_per_target': min(support),
               'all_X_counts_integer_nonnegative': True, 'maximum_count': max_count,
@@ -199,7 +208,11 @@ def main():
         del result  # Do not retain K562 matrices while allocating RPE1 aggregates.
     if set(axes) == {'K562', 'RPE1'}:
         train, held = set(axes['K562']['target_ids']), set(axes['RPE1']['target_ids'])
+        unmapped = {i for i in held if i.startswith('UNMAPPED:')}
+        held -= unmapped
+        train = {i for i in train if not i.startswith('UNMAPPED:')}
         cohort = {'shared_target_ids': sorted(train & held), 'RPE1_unseen_target_ids': sorted(held-train),
+                  'RPE1_unmapped_target_ids': sorted(unmapped),
                   'common_output_gene_ids': sorted(set(axes['K562']['output_ids']) & set(axes['RPE1']['output_ids'])),
                   'note': 'Metadata-only cohorts; no outcome-based selection or tuning.'}
         cohort['counts'] = {k: len(v) for k, v in cohort.items() if isinstance(v, list)}

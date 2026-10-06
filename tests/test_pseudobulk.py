@@ -68,6 +68,26 @@ def test_noninteger_counts_fail(tmp_path):
         aggregate(path,CFG,SOURCE)
 
 
+def test_missing_target_ids_keep_symbols_separate(tmp_path):
+    path=tmp_path/'x.h5ad';fixture(path)
+    with h5py.File(path,'r+') as f:
+        f['obs/gene_id'][2:] = ['nan', 'nan', 'nan']
+        f['obs/gene'][2:] = ['A', 'B', 'A']
+    r=aggregate(path,CFG,SOURCE)
+    assert r['pairs'] == [('UNMAPPED:A','A'), ('UNMAPPED:B','B')]
+    assert r['n'].tolist() == [2,1]
+    assert r['qc']['n_unmapped_target_cells'] == 3
+    np.testing.assert_allclose(r['means'][0,0], [5.5,4.5])
+
+
+def test_malformed_target_id_still_fails(tmp_path):
+    path=tmp_path/'x.h5ad';fixture(path)
+    with h5py.File(path,'r+') as f:
+        f['obs/gene_id'][2] = 'unexpected-id'
+    with pytest.raises(ValueError,match='Unexpected target'):
+        aggregate(path,CFG,SOURCE)
+
+
 def test_range_download_preserves_order_and_checks_protocol(monkeypatch):
     from src.data.replogle import source_chunks
     import io

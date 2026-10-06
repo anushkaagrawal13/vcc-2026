@@ -12,13 +12,30 @@ import boto3
 p=argparse.ArgumentParser()
 p.add_argument('--bucket',required=True)
 p.add_argument('--prefix',required=True)
+p.add_argument('--resume',action='store_true',help='Reuse locally present SHA-verified checkpoints')
 a=p.parse_args()
 root=Path(__file__).resolve().parents[1]
 state_dir=Path.home()/'.vcc-cloud'
 state_dir.mkdir(exist_ok=True)
 s3=boto3.client('s3',region_name='us-east-2')
 report={'status':'running','files':[],'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()}
+current_commit=report['source_commit']
+if a.resume:
+    previous=state_dir/'public-run-state.json'
+    report=json.loads(previous.read_text())
+    report.setdefault('resume_commits',[]).append(current_commit)
+    report.update(status='running')
+    report.pop('error',None)
 env=dict(os.environ,OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1')
+
+def verified(path):
+    path=Path(path)
+    record=next((x for x in report['files'] if x['path']==str(path.relative_to(root))),None)
+    if not record or not path.is_file() or path.stat().st_size!=record['bytes']:return False
+    h=hashlib.sha256()
+    with path.open('rb') as f:
+        for chunk in iter(lambda:f.read(8<<20),b''):h.update(chunk)
+    return h.hexdigest()==record['sha256']
 
 def publish_state(stage):
     report.update(stage=stage,updated_utc=datetime.now(timezone.utc).isoformat())
@@ -42,6 +59,7 @@ def run(command,stage):
 
 def backup(path):
     path=Path(path);relative=str(path.relative_to(root));key=a.prefix+'/'+relative
+    if verified(path):return
     h=hashlib.sha256()
     with path.open('rb') as f:
         for chunk in iter(lambda:f.read(8<<20),b''):h.update(chunk)
@@ -61,7 +79,9 @@ try:
         pattern='K562*' if line=='K562' else 'rpe1*'
         for path in sorted((root/'data/raw/replogle_2022').glob(pattern)):
             if not path.name.endswith('.partial'):backup(path)
-        run(['.venv/bin/python','-m','src.data.pseudobulk','--config',config,'--line',line],line+'-aggregate')
+        expected=[root/('results/001_replogle_pseudobulk/'+line+'_qc.json')]+[root/('data/processed/001_replogle_pseudobulk/'+line+suffix+'.parquet') for suffix in ['_pseudobulk','_control_baseline','_matched_strata']]
+        if not all(verified(path) for path in expected):
+            run(['.venv/bin/python','-m','src.data.pseudobulk','--config',config,'--line',line],line+'-aggregate')
         for path in sorted((root/'data/processed/001_replogle_pseudobulk').glob(line+'*.parquet')):backup(path)
         backup(root/('results/001_replogle_pseudobulk/'+line+'_qc.json'))
     # Cohorts use metadata only; never inspect held-out expression for selection.
@@ -70,7 +90,9 @@ from pathlib import Path
 p=Path('data/processed/001_replogle_pseudobulk');r=Path('results/001_replogle_pseudobulk')
 a={line:set(pd.read_parquet(p/(line+'_matched_strata.parquet'),columns=['target_gene_id']).target_gene_id) for line in ['K562','RPE1']}
 g={line:set(pd.read_parquet(p/(line+'_control_baseline.parquet'),columns=['output_gene_id']).output_gene_id) for line in ['K562','RPE1']}
-c={'shared_target_ids':sorted(a['K562']&a['RPE1']),'RPE1_unseen_target_ids':sorted(a['RPE1']-a['K562']),'common_output_gene_ids':sorted(g['K562']&g['RPE1'])};c['counts']={k:len(v) for k,v in c.items()};(r/'cohorts.json').write_text(json.dumps(c,indent=2))
+unmapped={i for i in a['RPE1'] if i.startswith('UNMAPPED:')}
+a={line:{i for i in ids if not i.startswith('UNMAPPED:')} for line,ids in a.items()}
+c={'shared_target_ids':sorted(a['K562']&a['RPE1']),'RPE1_unseen_target_ids':sorted(a['RPE1']-a['K562']),'RPE1_unmapped_target_ids':sorted(unmapped),'common_output_gene_ids':sorted(g['K562']&g['RPE1'])};c['counts']={k:len(v) for k,v in c.items()};(r/'cohorts.json').write_text(json.dumps(c,indent=2))
 """
     run(['.venv/bin/python','-c',code],'cohorts')
     backup(root/'results/001_replogle_pseudobulk/cohorts.json');backup(root/config)
