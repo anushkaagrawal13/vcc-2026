@@ -176,6 +176,7 @@ def main():
     destination = ROOT / cfg['processed_dir']
     reports = ROOT / cfg['results_dir']
     reports.mkdir(parents=True, exist_ok=True)
+    axes = {}
     for source in cfg['sources']:
         if args.line and args.line != source['line']:
             continue
@@ -183,9 +184,18 @@ def main():
         receipt = json.loads(path.with_suffix(path.suffix+'.json').read_text())
         result = aggregate(path, cfg, source)
         write_outputs(result, cfg, source, destination)
+        axes[source['line']] = {'target_ids': sorted(set(i for i, _ in result['pairs'])),
+                                'output_ids': result['output_ids'].tolist()}
         result['qc'].update(config_sha256=cfg['_sha256'], source=receipt)
         (reports / (source['line']+'_qc.json')).write_text(json.dumps(result['qc'], indent=2)+'\n')
         print(json.dumps({'event':'complete', 'line':source['line'], 'rows':result['qc']['tidy_rows']}), flush=True)
+    if set(axes) == {'K562', 'RPE1'}:
+        train, held = set(axes['K562']['target_ids']), set(axes['RPE1']['target_ids'])
+        cohort = {'shared_target_ids': sorted(train & held), 'RPE1_unseen_target_ids': sorted(held-train),
+                  'common_output_gene_ids': sorted(set(axes['K562']['output_ids']) & set(axes['RPE1']['output_ids'])),
+                  'note': 'Metadata-only cohorts; no outcome-based selection or tuning.'}
+        cohort['counts'] = {k: len(v) for k, v in cohort.items() if isinstance(v, list)}
+        (reports / 'cohorts.json').write_text(json.dumps(cohort, indent=2)+'\n')
 
 
 if __name__ == '__main__':

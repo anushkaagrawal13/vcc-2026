@@ -21,7 +21,7 @@ args = p.parse_args()
 root = Path(__file__).resolve().parents[1]
 reports = root / 'results/001_replogle_pseudobulk'
 deadline = time.monotonic() + args.wait_seconds
-while not all((reports / (line + '_qc.json')).exists() for line in ['K562', 'RPE1']):
+while not (all((reports / (line + '_qc.json')).exists() for line in ['K562', 'RPE1']) and (reports / 'cohorts.json').exists()):
     if time.monotonic() >= deadline:
         raise TimeoutError('Public batch did not finish before export deadline')
     time.sleep(20)
