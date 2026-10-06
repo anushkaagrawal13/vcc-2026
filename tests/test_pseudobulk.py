@@ -43,7 +43,7 @@ def test_matched_controls_chunking_and_archive(tmp_path):
     r=aggregate(gz,CFG,SOURCE)
     expected=x[2:].mean(0)-(2*x[0]+x[1])/3
     np.testing.assert_allclose(r['means'][0,0]-r['matched'][0,0],expected,atol=1e-6)
-    y=np.log1p(x*1000)
+    y=np.log1p(x.astype(np.float64)*1000)
     np.testing.assert_allclose(r['means'][1,0]-r['matched'][1,0],y[2:].mean(0)-(2*y[0]+y[1])/3,atol=1e-6)
     assert r['support']==[2]
     assert r['qc']['n_control_cells']==2
