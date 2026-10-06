@@ -10,6 +10,9 @@ from contextlib import contextmanager
 import indexed_gzip
 import hashlib
 import json
+import resource
+import sys
+from importlib.metadata import version
 from pathlib import Path
 import time
 
@@ -188,7 +191,9 @@ def main():
         write_outputs(result, cfg, source, destination)
         axes[source['line']] = {'target_ids': sorted(set(i for i, _ in result['pairs'])),
                                 'output_ids': result['output_ids'].tolist()}
-        result['qc'].update(config_sha256=cfg['_sha256'], source=receipt)
+        result['qc'].update(config_sha256=cfg['_sha256'], source=receipt,
+                            peak_process_rss_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (1 if sys.platform == 'darwin' else 1024),
+                            versions={name: version(name) for name in ['numpy','pandas','scipy','h5py','pyarrow','indexed-gzip']})
         (reports / (source['line']+'_qc.json')).write_text(json.dumps(result['qc'], indent=2)+'\n')
         print(json.dumps({'event':'complete', 'line':source['line'], 'rows':result['qc']['tidy_rows']}), flush=True)
     if set(axes) == {'K562', 'RPE1'}:
