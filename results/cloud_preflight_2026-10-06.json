@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-06",
+  "source_commit": "4d93a8a6ae062db89eb8dac057b26e3a2176d597",
+  "status": "preflight_passed_awaiting_restricted_access_and_token",
+  "ec2_launched": false,
+  "linux_rehearsal": {
+    "environment": "AWS CloudShell, us-east-2",
+    "command": "bash scripts/setup.sh",
+    "python": "3.12.2",
+    "pip_check": "passed",
+    "tests_passed": 14,
+    "test_runtime_seconds": 2.89,
+    "includes_official_cli_synthetic_packaging": true
+  },
+  "aws": {
+    "region": "us-east-2",
+    "standard_on_demand_vcpu_quota": 32,
+    "existing_instances": 0,
+    "estimated_remaining_credit_usd": 100,
+    "instance_type": "r6a.4xlarge",
+    "instance_count": 1,
+    "vcpu": 16,
+    "ram_gib": 128,
+    "on_demand_hourly_usd": 0.9072,
+    "price_source": "AWS Pricing GetProducts, Linux/shared/NA/Used/us-east-2",
+    "planned_encrypted_gp3_gib": 200,
+    "maximum_boot_hours": 8,
+    "initial_budget_usd": 15,
+    "eight_hour_compute_usd": 7.2576,
+    "planned_shutdown_behavior": "stop"
+  },
+  "batch_command": "bash scripts/run-on-ec2.sh config/000_zero_delta.yaml",
+  "inputs": [
+    "gene_names.csv", "pert_counts.csv", "manifest.json",
+    "context_A.h5ad", "context_B.h5ad", "context_C.h5ad"
+  ],
+  "input_source": "Official authenticated vcc datasets download controls",
+  "runner_minimum_free_disk_gib": 100,
+  "output_target_status": "packaged_not_submitted",
+  "backup_plan": "Private S3 artifact export with SHA-256 verification; local disk is insufficient. Stop compute at completion. Retained EBS remains billable until cleanup.",
+  "local_rehearsal": {
+    "result": "11 passed, 3 blocked by generation disk-space guard",
+    "original_environment_issue": "iCloud dataless dependencies timed out on read",
+    "clean_environment": "Official synthetic package test passed; remaining tests require more free local disk",
+    "temporary_local_environment_removed": true
+  }
+}
