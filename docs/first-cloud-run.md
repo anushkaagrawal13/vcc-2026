@@ -1,6 +1,8 @@
 # First cloud run: prepare before paying
 
-Status: scripts prepared; no EC2 launch or full-panel submission performed.
+Status: the October 6 batch completed and its package was backed up with verified
+SHA-256 hashes. Compute is stopped; submission remains pending. See
+`results/first_cloud_batch_2026-10-06.json` for the execution record.
 Do not skip the full null submission gate to start model development.
 
 ## Before launch

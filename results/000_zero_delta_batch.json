@@ -1,0 +1,13 @@
+{
+  "commit": "4d93a8a6ae062db89eb8dac057b26e3a2176d597",
+  "config_sha256": "90ccb90fa1ad110b952528f5f854288b4ce73f77011a80d2f33df9d26584508e",
+  "status": "packaged_not_submitted",
+  "official_score": null,
+  "submission_sha256": "35a8f1e9d5a972f7a16b2b9f0666f5eae5a6a9e9ddec594049121727ee030a88",
+  "stages": [
+    "download",
+    "predict",
+    "validate",
+    "package"
+  ]
+}

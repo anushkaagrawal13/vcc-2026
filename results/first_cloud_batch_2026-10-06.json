@@ -1,5 +1,5 @@
 {
-  "status": "running_prediction_generation",
+  "status": "packaged_not_submitted_compute_stopped",
   "source_commit": "4d93a8a6ae062db89eb8dac057b26e3a2176d597",
   "instance_id": "i-0bc0c66ea507a5656",
   "region": "us-east-2",
@@ -13,7 +13,11 @@
   "shutdown_behavior": "stop",
   "boot_timer_verified_active": true,
   "batch_timer_verified_active": true,
-  "storage": {"volume_gib": 200, "type": "gp3", "encrypted": true},
+  "storage": {
+    "volume_gib": 200,
+    "type": "gp3",
+    "encrypted": true
+  },
   "imds_tokens": "required",
   "ingress": "SSH only from the current CloudShell IPv4 /32",
   "checks": {
@@ -21,7 +25,10 @@
     "ec2_setup_tests": "passed",
     "download_checkpoint_utc": "2026-10-06T15:35:00.630306+00:00",
     "six_input_hashes_match_prior_validation": true,
-    "generation": "in_progress"
+    "generation": "passed",
+    "official_validation": "passed",
+    "packaging": "passed",
+    "prediction_sha256_matches_kaggle": true
   },
   "budget": {
     "limit_usd": 15,
@@ -30,15 +37,28 @@
     "maximum_export_restart_minutes": 45,
     "eight_hour_compute_usd": 7.2576,
     "actual_total_cost_usd": null,
-    "note": "Retained EBS continues billing after Stop; export supervisor requests Stop again after backup. Storage cleanup remains required."
+    "note": "Retained EBS continues billing after Stop; export supervisor requests Stop again after backup. Storage cleanup remains required.",
+    "estimated_compute_storage_ipv4_before_credits_usd": 0.4,
+    "estimate_note": "Approximate run cost through export completion, not an AWS invoice. Credits and taxes not applied. Retained EBS costs about $0.53/day until cleanup."
   },
   "backup": {
-    "destination": "private encrypted S3 bucket in us-east-2",
+    "destination": "s3://vcc-2026-artifacts-706098201643-us-east-2/first-batch-20261006/",
     "public_access_blocked": true,
-    "supervisor": "running in CloudShell",
-    "verification": "pending source/destination SHA-256 comparison",
-    "cleanup": "retain EBS until verified backup and cleanup approval"
+    "supervisor": "completed; requested compute stop",
+    "verification": "all exported files matched source SHA-256 after streaming download from S3",
+    "cleanup": "retain EBS until verified backup and cleanup approval",
+    "verified_utc": "2026-10-06T15:58:26.248731+00:00",
+    "export_runtime_seconds": 141.4695405960083
   },
   "official_score": null,
-  "submission_status": "not_submitted"
+  "submission_status": "not_submitted",
+  "package": {
+    "bytes": 3863726080,
+    "sha256": "35a8f1e9d5a972f7a16b2b9f0666f5eae5a6a9e9ddec594049121727ee030a88",
+    "n_cells": 360000,
+    "n_genes": 18533,
+    "stored_entries": 2235911741,
+    "prediction_sha256": "0e88d9cb77b0280fd445fb943dd35c6535ca98d5031b5fe3000a74cc41454708"
+  },
+  "final_instance_state": "stopped"
 }

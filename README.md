@@ -139,7 +139,7 @@ require a larger CPU machine even though streaming generation works locally.
 Keep the full cell/gene panel when moving the run; do not shrink the experiment
 to get a locally convenient but invalid submission.
 
-## Current status and compute plan (September 22, 2026)
+## Current status and compute plan (October 6, 2026)
 
 - Validation controls are downloaded, checksummed and inspected. The Kaggle
   environment passes **11 tests**; see `results/kaggle_setup.json`.
@@ -147,24 +147,27 @@ to get a locally convenient but invalid submission.
   360,000 cells, 18,533 genes, and 2,235,911,741 stored entries. The prediction
   checksum and input provenance are recorded in
   `results/000_zero_delta_validation.json`.
-- Official packaging is still blocked on Kaggle: the measured peak estimate is
-  61.2 GB (57.0 GiB), against a 30 GiB container memory limit. No `.vcc` package
-  or submission was created. The controls bundle contains no perturbation
-  ground truth, so it cannot produce a local biological score; the official
-  score is returned by the challenge scorer after submission.
-- AWS signup is complete. The requested Ohio standard On-Demand quota increase
-  from 5 to **16 vCPUs is pending**. No project EC2 machine has been launched.
-- Planned initial host: **128 GiB RAM, 200 GiB SSD, CPU only**, used intermittently
-  for packaging and larger preprocessing jobs. Confirm the instance type, live
-  regional price and spending limit before launching. Configure automatic stop
-  and billing alerts; alerts are not a spending cap, and retained storage remains
-  billable while compute is stopped.
+- The first bounded AWS batch completed download, generation, official validation,
+  and packaging at source commit `4d93a8a`. The regenerated prediction exactly
+  matches the earlier Kaggle SHA-256. The official `.vcc` package is 3,863,726,080
+  bytes, with SHA-256 `35a8f1e9d5a972f7a16b2b9f0666f5eae5a6a9e9ddec594049121727ee030a88`.
+- The package and reports are backed up to private encrypted S3 storage; source
+  and downloaded-backup SHA-256 hashes were verified. EC2 stopped automatically
+  after the batch, restarted briefly for export, and is confirmed stopped again.
+  See `results/first_cloud_batch_2026-10-06.json`. Retained EBS still incurs
+  storage charges until approved cleanup.
+- The Ohio quota is **32 vCPUs**. The successful host was one `r6a.4xlarge`
+  (128 GiB RAM, 200 GiB encrypted gp3), at $0.9072/hour before credits. Both
+  eight-hour stop timers were verified; export had a separate 45-minute timer.
+  Linux rehearsal passed all 14 tests. The initial spending limit was $15.
+- Status is **packaged_not_submitted**. The controls bundle has no perturbation
+  ground truth; no local biological score or leaderboard score is claimed.
 - Keep Kaggle for lightweight experiments and optional GPU work. Notebooks clone
   the repo and call its modules; they do not contain the pipeline. Publish only
   permitted processed public-data tables as a Kaggle Dataset when ready.
 
-The next concrete milestone is to package the validated null prediction on a
-sufficiently large host, review it, and then submit it for the official score.
+The next concrete milestone is to review the backed-up null package and submit
+it once for the official score, then commit the returned metrics.
 Reassess hosting
 costs after measuring actual runtime and storage needs; this is an initial
 project compute plan, not a commitment to an always-on server.

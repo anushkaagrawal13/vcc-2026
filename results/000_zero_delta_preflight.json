@@ -1,0 +1,9 @@
+{
+  "matrix_bytes": 17890173936,
+  "estimated_memory_needed_bytes": 61175553610,
+  "physical_memory_bytes": 132208041984,
+  "effective_memory_limit_bytes": 132208041984,
+  "estimated_scratch_needed_bytes": 27987873526,
+  "scratch_free_bytes": 197277466624,
+  "can_run": true
+}
