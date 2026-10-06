@@ -1,0 +1,44 @@
+{
+  "status": "running_prediction_generation",
+  "source_commit": "4d93a8a6ae062db89eb8dac057b26e3a2176d597",
+  "instance_id": "i-0bc0c66ea507a5656",
+  "region": "us-east-2",
+  "instance_type": "r6a.4xlarge",
+  "ami_id": "ami-0fa99aa8f97f9e30b",
+  "ami_name": "ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20260923",
+  "launch_utc": "2026-10-06T15:33:02Z",
+  "batch_started_utc": "2026-10-06T15:34:13Z",
+  "boot_stop_deadline_utc": "2026-10-06T23:33:06Z",
+  "batch_stop_deadline_utc": "2026-10-06T23:34:13Z",
+  "shutdown_behavior": "stop",
+  "boot_timer_verified_active": true,
+  "batch_timer_verified_active": true,
+  "storage": {"volume_gib": 200, "type": "gp3", "encrypted": true},
+  "imds_tokens": "required",
+  "ingress": "SSH only from the current CloudShell IPv4 /32",
+  "checks": {
+    "linux_rehearsal_tests_passed": 14,
+    "ec2_setup_tests": "passed",
+    "download_checkpoint_utc": "2026-10-06T15:35:00.630306+00:00",
+    "six_input_hashes_match_prior_validation": true,
+    "generation": "in_progress"
+  },
+  "budget": {
+    "limit_usd": 15,
+    "compute_hourly_usd": 0.9072,
+    "maximum_batch_hours": 8,
+    "maximum_export_restart_minutes": 45,
+    "eight_hour_compute_usd": 7.2576,
+    "actual_total_cost_usd": null,
+    "note": "Retained EBS continues billing after Stop; export supervisor requests Stop again after backup. Storage cleanup remains required."
+  },
+  "backup": {
+    "destination": "private encrypted S3 bucket in us-east-2",
+    "public_access_blocked": true,
+    "supervisor": "running in CloudShell",
+    "verification": "pending source/destination SHA-256 comparison",
+    "cleanup": "retain EBS until verified backup and cleanup approval"
+  },
+  "official_score": null,
+  "submission_status": "not_submitted"
+}
