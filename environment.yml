@@ -18,6 +18,7 @@ dependencies:
       - httpcore==1.0.9
       - httpx==0.28.1
       - idna==3.20
+      - indexed-gzip==1.10.3
       - iniconfig==2.3.0
       - jaraco-classes==3.4.0
       - jaraco-context==6.1.2

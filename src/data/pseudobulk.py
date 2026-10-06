@@ -7,7 +7,7 @@ biological score or an inferred independent-replicate estimate.
 """
 import argparse
 from contextlib import contextmanager
-import gzip
+import indexed_gzip
 import hashlib
 import json
 from pathlib import Path
@@ -26,8 +26,10 @@ from .replogle import ROOT, load_config
 @contextmanager
 def open_h5(path):
     if str(path).endswith('.gz'):
-        with gzip.open(path, 'rb') as stream, h5py.File(stream, 'r') as f:
-            yield f
+        with indexed_gzip.IndexedGzipFile(str(path)) as stream:
+            stream.build_full_index()
+            with h5py.File(stream, 'r') as f:
+                yield f
     else:
         with h5py.File(path, 'r') as f:
             yield f

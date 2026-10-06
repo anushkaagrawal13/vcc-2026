@@ -45,7 +45,9 @@ Downloads are losslessly gzip-compressed as they arrive to avoid staging 19.4 GB
 of dense matrices. Receipts hash the original bytes and the compressed archive.
 The original single cells remain available by decompressing these archives for
 future DE evaluation. The adapter reads old AnnData categorical references and
-streams the gzip-backed HDF5 matrix rather than loading it into memory.
+streams the gzip-backed HDF5 matrix rather than loading it into memory. A pinned
+`indexed-gzip` reader builds seek checkpoints once, avoiding full decompression
+on every HDF5 metadata seek.
 
 For each target, the normalized target is the mean of
 `log1p(10000 * count / obs.UMI_count)` over its cells, minus a weighted mean of
