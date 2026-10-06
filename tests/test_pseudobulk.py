@@ -66,3 +66,24 @@ def test_noninteger_counts_fail(tmp_path):
     path=tmp_path/'x.h5ad';fixture(path,bad=True)
     with pytest.raises(ValueError,match='integer raw counts'):
         aggregate(path,CFG,SOURCE)
+
+
+def test_range_download_preserves_order_and_checks_protocol(monkeypatch):
+    from src.data.replogle import source_chunks
+    import io
+    payload=b'abcdefghijklmnopqrstuvwxyz'
+    class Response(io.BytesIO):
+        status=206
+    def open_request(request, timeout):
+        start,end=map(int,request.headers['Range'].split('=')[1].split('-'))
+        r=Response(payload[start:end+1])
+        r.headers={'Content-Range':f'bytes {start}-{end}/{len(payload)}'}
+        return r
+    monkeypatch.setattr('urllib.request.urlopen',open_request)
+    assert b''.join(source_chunks({'url':'https://example.org/data','bytes':len(payload)},workers=3,block_bytes=4))==payload
+    def wrong(request, timeout):
+        r=Response(payload);r.status=200;r.headers={};return r
+    monkeypatch.setattr('urllib.request.urlopen',wrong)
+    monkeypatch.setattr('src.data.replogle.time.sleep',lambda _:None)
+    with pytest.raises(ValueError,match='exact byte range'):
+        list(source_chunks({'url':'https://example.org/data','bytes':len(payload)},workers=1))

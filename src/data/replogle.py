@@ -1,5 +1,8 @@
 """Pinned Replogle source downloads, losslessly compressed during transfer."""
 import argparse
+from collections import deque
+from concurrent.futures import ThreadPoolExecutor
+import time
 import gzip
 import hashlib
 import json
@@ -24,6 +27,35 @@ def load_config(path):
     return cfg
 
 
+def source_chunks(source, workers=4, block_bytes=16 << 20):
+    """Bounded ordered range reads: at most four blocks in flight, not a full file."""
+    def fetch(start):
+        end = min(start + block_bytes, source['bytes']) - 1
+        expected = f"bytes {start}-{end}/{source['bytes']}"
+        for attempt in range(3):
+            try:
+                request = urllib.request.Request(source['url'], headers={'Range': f'bytes={start}-{end}'})
+                with urllib.request.urlopen(request, timeout=120) as response:
+                    if response.status != 206 or response.headers.get('Content-Range') != expected:
+                        raise ValueError('Server did not honor exact byte range')
+                    data = response.read()
+                if len(data) != end - start + 1:
+                    raise ValueError('Truncated byte range')
+                return data
+            except (OSError, ValueError):
+                if attempt == 2:
+                    raise
+                time.sleep(2 ** attempt)
+    starts = iter(range(0, source['bytes'], block_bytes))
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        queue = deque(pool.submit(fetch, start) for start in [next(starts, None) for _ in range(workers)] if start is not None)
+        while queue:
+            yield queue.popleft().result()
+            start = next(starts, None)
+            if start is not None:
+                queue.append(pool.submit(fetch, start))
+
+
 def download_one(source, destination):
     """Hash original bytes, preserve them in gzip; never stage the dense original."""
     destination = Path(destination)
@@ -44,17 +76,16 @@ def download_one(source, destination):
         return result
     partial = destination.with_suffix(destination.suffix + '.partial')
     md5, sha, size = hashlib.md5(), hashlib.sha256(), 0
-    with urllib.request.urlopen(source['url'], timeout=120) as response:
-        with partial.open('wb') as raw, gzip.GzipFile(filename='', mode='wb', fileobj=raw, compresslevel=1, mtime=0) as out:
-            while chunk := response.read(8 << 20):
-                if shutil.disk_usage(destination.parent).free < (1 << 30):
-                    raise OSError("Less than 1 GiB scratch remaining; stopped safely")
-                md5.update(chunk)
-                sha.update(chunk)
-                size += len(chunk)
-                out.write(chunk)
-                if size // (1 << 30) != (size - len(chunk)) // (1 << 30):
-                    print(json.dumps({'event': 'download', 'line': source['line'], 'bytes': size}), flush=True)
+    with partial.open('wb') as raw, gzip.GzipFile(filename='', mode='wb', fileobj=raw, compresslevel=1, mtime=0) as out:
+        for chunk in source_chunks(source):
+            if shutil.disk_usage(destination.parent).free < (1 << 30):
+                raise OSError("Less than 1 GiB scratch remaining; stopped safely")
+            md5.update(chunk)
+            sha.update(chunk)
+            size += len(chunk)
+            out.write(chunk)
+            if size // (1 << 30) != (size - len(chunk)) // (1 << 30):
+                print(json.dumps({'event': 'download', 'line': source['line'], 'bytes': size}), flush=True)
     if size != source['bytes']:
         raise ValueError(f'Download size mismatch: {size}')
     if source.get('md5') and md5.hexdigest() != source['md5']:
