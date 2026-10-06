@@ -1,5 +1,5 @@
 {
-  "status": "submitted_scoring_pending_compute_terminated",
+  "status": "scored_compute_terminated",
   "source_commit": "4d93a8a6ae062db89eb8dac057b26e3a2176d597",
   "instance_id": "i-0bc0c66ea507a5656",
   "region": "us-east-2",
@@ -51,8 +51,8 @@
     "verified_utc": "2026-10-06T15:58:26.248731+00:00",
     "export_runtime_seconds": 141.4695405960083
   },
-  "official_score": null,
-  "submission_status": "launching",
+  "official_score": -0.03349741387682123,
+  "submission_status": "published",
   "package": {
     "bytes": 3863726080,
     "sha256": "35a8f1e9d5a972f7a16b2b9f0666f5eae5a6a9e9ddec594049121727ee030a88",

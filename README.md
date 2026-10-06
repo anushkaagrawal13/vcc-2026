@@ -161,16 +161,16 @@ to get a locally convenient but invalid submission.
   eight-hour stop timers were verified; export had a separate 45-minute timer.
   Linux rehearsal passed all 14 tests. The initial spending limit was $15.
 - Submitted once as entry **`Axby4yc5z8rw49HHPjz7`**; all bytes uploaded and
-  server MD5 verified. Official status is **launching**, with scores pending.
+  server MD5 verified. Official status is **published**, with overall score **−0.03350**
+  and rank 974 at retrieval.
   See `results/000_zero_delta_submission.json`. The controls bundle has no
   perturbation ground truth; local schema validation is not a biological score.
 - Keep Kaggle for lightweight experiments and optional GPU work. Notebooks clone
   the repo and call its modules; they do not contain the pipeline. Publish only
   permitted processed public-data tables as a Kaggle Dataset when ready.
 
-The next concrete milestone is to retrieve the six official metrics for the
-existing entry, then begin Replogle pseudobulking. Do not create a duplicate
-submission while this entry is scoring.
+The null submission gate is complete. The next milestone is verified Replogle
+pseudobulks, followed by the K562 → RPE1 transfer experiment.
 Reassess hosting
 costs after measuring actual runtime and storage needs; this is an initial
 project compute plan, not a commitment to an always-on server.
@@ -207,9 +207,8 @@ zero-score anchor.
 
 ## Next sessions
 
-1. Retrieve the existing null entry with `vcc status Axby4yc5z8rw49HHPjz7 --json`.
-   Commit the six raw/scaled metrics, panel, partition and anchor IDs when
-   published; diagnose any failure before starting modeling.
+1. Completed: null entry `Axby4yc5z8rw49HHPjz7` is published at −0.03350.
+   All six raw/scaled metrics, panel, partition and anchor IDs are committed.
 2. Download the smaller Replogle K562/RPE1 panels first (about 9.9/8.1 GB), inspect
    their count layers and guide/batch annotations, then pseudobulk with matched
    controls. Define the expression scale explicitly. Keep RPE1 perturbation

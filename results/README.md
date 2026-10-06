@@ -7,7 +7,7 @@ challenge score.
 | Experiment | Data | Status | Official score |
 |---|---|---|---|
 | Synthetic schema fixture | 3 genes, 2 targets, A/B/C, 4 cells each | Official CLI packaging test passed | Not applicable |
-| `000_zero_delta` | Official `vcc2026-val-1` controls | Submitted as `Axby4yc5z8rw49HHPjz7`; compute terminated and working disk deleted | Pending (launching) |
+| `000_zero_delta` | Official `vcc2026-val-1` controls | Submitted as `Axby4yc5z8rw49HHPjz7`; compute terminated and working disk deleted | −0.03350 (published) |
 | K562 → RPE1 ridge | Public Replogle | Deferred until Session 1 completes | Not applicable |
 
 For each real experiment commit its config, seed, git revision, input hashes,
@@ -21,7 +21,8 @@ validation, and produced a 3.86-GB `.vcc` package. The prediction SHA-256 exactl
 matches the earlier Kaggle result. All nine exported files were verified against
 their source SHA-256 hashes. See `first_cloud_batch_2026-10-06.json` and
 `000_zero_delta_batch.json`. Upload succeeded with server MD5 verification;
-`000_zero_delta_submission.json` records the entry. Official scoring is pending.
+`000_zero_delta_submission.json` records the published entry and all six metrics.
+Overall: **−0.0334974**, rank **974** at retrieval.
 EC2 termination and deletion of the attached 200 GiB disk were verified; the
 private S3 backup is retained.
 
@@ -35,3 +36,21 @@ scratch and several copies of that matrix in RAM. The measured packaging
 estimate was 57.0 GiB RAM and 26.1 GiB scratch. The successful host used 128 GiB
 RAM and 200 GiB gp3; the full-panel runner requires at least 96 GiB effective RAM
 and 100 GiB free disk before starting.
+
+## Official null baseline (October 6)
+
+| Metric | Raw | Reference-scaled |
+|---|---:|---:|
+| PDS | 0.498246 | −0.003927 |
+| MSE | 1.027118 | 0.000000 |
+| LFC NMAE | 1.008885 | −0.012605 |
+| Direction fidelity | 0.465276 | −0.158275 |
+| Direction reach | 0.059642 | −0.021876 |
+| Significant-DE Jaccard | 0.028796 | −0.004302 |
+
+These are the API's published aggregate values, not local estimates. The null
+model has no target-specific biological signal. Its weakest scaled metric is
+direction fidelity, supporting evaluation of count-distribution calibration as
+well as mean deltas in later experiments. A negative overall score is compatible
+with this baseline: the rubric's zero anchor is a mean-perturbation-response
+model, not this control-only multinomial model.

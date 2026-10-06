@@ -2,7 +2,8 @@
 
 Status: the October 6 batch completed and its package was backed up with verified
 SHA-256 hashes. Compute is terminated and its working disk deleted. Entry
-`Axby4yc5z8rw49HHPjz7` was submitted successfully; official scoring is pending. See
+`Axby4yc5z8rw49HHPjz7` was published with overall score −0.03350; all six metrics are in
+`results/000_zero_delta_submission.json`. See
 `results/first_cloud_batch_2026-10-06.json` for the execution record.
 Do not skip the full null submission gate to start model development.
 
