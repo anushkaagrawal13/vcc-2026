@@ -1,5 +1,5 @@
 {
-  "status": "packaged_not_submitted_compute_stopped",
+  "status": "submitted_scoring_pending_compute_terminated",
   "source_commit": "4d93a8a6ae062db89eb8dac057b26e3a2176d597",
   "instance_id": "i-0bc0c66ea507a5656",
   "region": "us-east-2",
@@ -16,7 +16,8 @@
   "storage": {
     "volume_gib": 200,
     "type": "gp3",
-    "encrypted": true
+    "encrypted": true,
+    "final_state": "deleted; EC2 InvalidVolume.NotFound verified"
   },
   "imds_tokens": "required",
   "ingress": "SSH only from the current CloudShell IPv4 /32",
@@ -37,7 +38,7 @@
     "maximum_export_restart_minutes": 45,
     "eight_hour_compute_usd": 7.2576,
     "actual_total_cost_usd": null,
-    "note": "Retained EBS continues billing after Stop; export supervisor requests Stop again after backup. Storage cleanup remains required.",
+    "note": "Instance terminated and attached EBS deleted after verified backup; only retained S3 artifacts continue storage billing.",
     "estimated_compute_storage_ipv4_before_credits_usd": 0.4,
     "estimate_note": "Approximate run cost through export completion, not an AWS invoice. Credits and taxes not applied. Retained EBS costs about $0.53/day until cleanup."
   },
@@ -46,12 +47,12 @@
     "public_access_blocked": true,
     "supervisor": "completed; requested compute stop",
     "verification": "all exported files matched source SHA-256 after streaming download from S3",
-    "cleanup": "retain EBS until verified backup and cleanup approval",
+    "cleanup": "completed: instance terminated and volume deletion verified; S3 retained",
     "verified_utc": "2026-10-06T15:58:26.248731+00:00",
     "export_runtime_seconds": 141.4695405960083
   },
   "official_score": null,
-  "submission_status": "not_submitted",
+  "submission_status": "launching",
   "package": {
     "bytes": 3863726080,
     "sha256": "35a8f1e9d5a972f7a16b2b9f0666f5eae5a6a9e9ddec594049121727ee030a88",
@@ -60,5 +61,6 @@
     "stored_entries": 2235911741,
     "prediction_sha256": "0e88d9cb77b0280fd445fb943dd35c6535ca98d5031b5fe3000a74cc41454708"
   },
-  "final_instance_state": "stopped"
+  "final_instance_state": "terminated",
+  "submission_entry_id": "Axby4yc5z8rw49HHPjz7"
 }

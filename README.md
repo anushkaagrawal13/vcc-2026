@@ -153,21 +153,24 @@ to get a locally convenient but invalid submission.
   bytes, with SHA-256 `35a8f1e9d5a972f7a16b2b9f0666f5eae5a6a9e9ddec594049121727ee030a88`.
 - The package and reports are backed up to private encrypted S3 storage; source
   and downloaded-backup SHA-256 hashes were verified. EC2 stopped automatically
-  after the batch, restarted briefly for export, and is confirmed stopped again.
-  See `results/first_cloud_batch_2026-10-06.json`. Retained EBS still incurs
-  storage charges until approved cleanup.
+  after the batch, restarted briefly for export, and was then terminated.
+  The attached 200 GiB EBS disk was deleted; the private S3 backup remains.
+  See `results/first_cloud_batch_2026-10-06.json`.
 - The Ohio quota is **32 vCPUs**. The successful host was one `r6a.4xlarge`
   (128 GiB RAM, 200 GiB encrypted gp3), at $0.9072/hour before credits. Both
   eight-hour stop timers were verified; export had a separate 45-minute timer.
   Linux rehearsal passed all 14 tests. The initial spending limit was $15.
-- Status is **packaged_not_submitted**. The controls bundle has no perturbation
-  ground truth; no local biological score or leaderboard score is claimed.
+- Submitted once as entry **`Axby4yc5z8rw49HHPjz7`**; all bytes uploaded and
+  server MD5 verified. Official status is **launching**, with scores pending.
+  See `results/000_zero_delta_submission.json`. The controls bundle has no
+  perturbation ground truth; local schema validation is not a biological score.
 - Keep Kaggle for lightweight experiments and optional GPU work. Notebooks clone
   the repo and call its modules; they do not contain the pipeline. Publish only
   permitted processed public-data tables as a Kaggle Dataset when ready.
 
-The next concrete milestone is to review the backed-up null package and submit
-it once for the official score, then commit the returned metrics.
+The next concrete milestone is to retrieve the six official metrics for the
+existing entry, then begin Replogle pseudobulking. Do not create a duplicate
+submission while this entry is scoring.
 Reassess hosting
 costs after measuring actual runtime and storage needs; this is an initial
 project compute plan, not a commitment to an always-on server.
@@ -204,7 +207,9 @@ zero-score anchor.
 
 ## Next sessions
 
-1. Finish the real null upload and record its returned score before modeling.
+1. Retrieve the existing null entry with `vcc status Axby4yc5z8rw49HHPjz7 --json`.
+   Commit the six raw/scaled metrics, panel, partition and anchor IDs when
+   published; diagnose any failure before starting modeling.
 2. Download the smaller Replogle K562/RPE1 panels first (about 9.9/8.1 GB), inspect
    their count layers and guide/batch annotations, then pseudobulk with matched
    controls. Define the expression scale explicitly. Keep RPE1 perturbation

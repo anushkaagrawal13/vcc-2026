@@ -1,7 +1,8 @@
 # First cloud run: prepare before paying
 
 Status: the October 6 batch completed and its package was backed up with verified
-SHA-256 hashes. Compute is stopped; submission remains pending. See
+SHA-256 hashes. Compute is terminated and its working disk deleted. Entry
+`Axby4yc5z8rw49HHPjz7` was submitted successfully; official scoring is pending. See
 `results/first_cloud_batch_2026-10-06.json` for the execution record.
 Do not skip the full null submission gate to start model development.
 
@@ -107,8 +108,10 @@ After successful packaging:
 
 - Export the experiment config, `results/000_zero_delta*.json`, environment list,
   run state, preflight report and `.vcc` package. Verify SHA-256 on the destination.
-- The status is **packaged_not_submitted**, not a leaderboard result. Review the
-  package and submit exactly once with the official CLI:
+- The October 6 package was submitted as `Axby4yc5z8rw49HHPjz7`; use
+  `vcc status Axby4yc5z8rw49HHPjz7 --json` to retrieve its result. Do not rerun
+  the following submission command for this package; it documents the original
+  one-time upload:
 
   ```bash
   .venv/bin/vcc submit data/processed/000_zero_delta/prediction.vcc \

@@ -7,7 +7,7 @@ challenge score.
 | Experiment | Data | Status | Official score |
 |---|---|---|---|
 | Synthetic schema fixture | 3 genes, 2 targets, A/B/C, 4 cells each | Official CLI packaging test passed | Not applicable |
-| `000_zero_delta` | Official `vcc2026-val-1` controls | Official package created on EC2; private S3 backup SHA-256 verified; compute stopped | Not submitted |
+| `000_zero_delta` | Official `vcc2026-val-1` controls | Submitted as `Axby4yc5z8rw49HHPjz7`; compute terminated and working disk deleted | Pending (launching) |
 | K562 → RPE1 ridge | Public Replogle | Deferred until Session 1 completes | Not applicable |
 
 For each real experiment commit its config, seed, git revision, input hashes,
@@ -20,7 +20,10 @@ completed. It generated 360,000 cells across 18,533 genes, passed official CLI
 validation, and produced a 3.86-GB `.vcc` package. The prediction SHA-256 exactly
 matches the earlier Kaggle result. All nine exported files were verified against
 their source SHA-256 hashes. See `first_cloud_batch_2026-10-06.json` and
-`000_zero_delta_batch.json`. Submission and official scoring remain pending.
+`000_zero_delta_batch.json`. Upload succeeded with server MD5 verification;
+`000_zero_delta_submission.json` records the entry. Official scoring is pending.
+EC2 termination and deletion of the attached 200 GiB disk were verified; the
+private S3 backup is retained.
 
 `000_zero_delta_status.json` records an earlier local disk failure, and
 `000_zero_delta_validation.json` records the earlier Kaggle generation run;
