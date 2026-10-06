@@ -42,3 +42,5 @@ typing-inspection==0.4.4
 vcc-cli==0.2.1
 zarr==3.4.0
 zstandard==0.25.0
+
+pyarrow==25.0.1

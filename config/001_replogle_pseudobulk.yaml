@@ -1,0 +1,36 @@
+experiment: 001_replogle_pseudobulk
+assay_type: CRISPRi
+raw_dir: data/raw/replogle_2022
+processed_dir: data/processed/001_replogle_pseudobulk
+results_dir: results/001_replogle_pseudobulk
+control_label: non-targeting
+batch_key: gem_group
+target_symbol_key: gene
+target_id_key: gene_id
+guide_key: sgID_AB
+library_size_key: UMI_count
+normalization: log1p_counts_per_10000_total_UMI
+normalization_target: 10000
+chunk_cells: 1024
+minimum_controls_per_batch: 10
+sources:
+  - dataset: replogle_2022_K562_essential
+    line: K562
+    role: train
+    name: K562_essential_raw_singlecell_01.h5ad
+    url: https://ndownloader.figshare.com/files/35773219
+    figshare_file_id: 35773219
+    bytes: 10661879995
+    md5: 4f1122ce1c7f13299a68df6459a266d3
+    license: CC-BY-4.0
+    sampled_day: 6
+  - dataset: replogle_2022_RPE1_essential
+    line: RPE1
+    role: held_out
+    name: rpe1_raw_singlecell_01.h5ad
+    url: https://ndownloader.figshare.com/files/35775606
+    figshare_file_id: 35775606
+    bytes: 8700873216
+    md5: null
+    license: CC-BY-4.0
+    sampled_day: 7

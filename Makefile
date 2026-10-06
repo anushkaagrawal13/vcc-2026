@@ -17,3 +17,9 @@ validate:
 	$(PYTHON) -m src.evaluate --config $(CONFIG)
 package:
 	$(PYTHON) -m src.evaluate --config $(CONFIG) --package
+
+.PHONY: download-public pseudobulk
+download-public:
+	$(PYTHON) -m src.data.replogle --config config/001_replogle_pseudobulk.yaml
+pseudobulk:
+	$(PYTHON) -m src.data.pseudobulk --config config/001_replogle_pseudobulk.yaml
