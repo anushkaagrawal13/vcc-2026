@@ -4,6 +4,7 @@ import gzip
 import hashlib
 import json
 import os
+import shutil
 from pathlib import Path
 import urllib.request
 
@@ -46,6 +47,8 @@ def download_one(source, destination):
     with urllib.request.urlopen(source['url'], timeout=120) as response:
         with partial.open('wb') as raw, gzip.GzipFile(filename='', mode='wb', fileobj=raw, compresslevel=1, mtime=0) as out:
             while chunk := response.read(8 << 20):
+                if shutil.disk_usage(destination.parent).free < (1 << 30):
+                    raise OSError("Less than 1 GiB scratch remaining; stopped safely")
                 md5.update(chunk)
                 sha.update(chunk)
                 size += len(chunk)
