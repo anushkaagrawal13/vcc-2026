@@ -9,8 +9,8 @@
 
 Replogle's official [dataset record](https://plus.figshare.com/articles/dataset/_Mapping_information-rich_genotype-phenotype_landscapes_with_genome-scale_Perturb-seq_Replogle_et_al_2022_processed_Perturb-seq_datasets/20029387)
 is linked by the challenge. Smaller K562 file ID 35773219 and RPE1 35775606 are
-the initial candidates; inspect their actual metadata/count layers before writing
-an adapter. Do not assume processed matrices contain raw counts in X.
+the selected sources for experiment 001. The adapter checks the actual metadata
+and verifies that every value in X is a nonnegative integer count.
 
 For each source record accession, URL, file checksum, license, assay, cell line,
 condition, batch, control labels, target/guide mapping, gene identifiers and count
@@ -62,12 +62,45 @@ Output is one tidy Parquet row per `(dataset, line, assay_type, target_gene_id,
 target_gene, output_gene_id)`, with both scales, target cell count, guide-pair
 support and matched-gem count. Separate Parquets contain control-only baseline
 expression and target-by-gem matching counts. Symbols sharing an Ensembl ID are
-preserved rather than silently merged. K562 and RPE1 files remain separate;
+preserved rather than silently merged. RPE1 targets NEDD8-MDP1, PRSS50, and
+RBM14-RBM4 have missing source IDs: preserve them as `UNMAPPED:<symbol>`,
+record their cell counts in QC, and exclude them from Ensembl-ID overlap cohorts.
+No speculative gene mapping or cell deletion is performed. K562 and RPE1 files remain separate;
 RPE1 outcomes are solely held-out evaluation labels. No modeling or tuning is
 performed by this aggregation. These pseudobulks alone do not reproduce the
 single-cell DE scoring rubric.
 
-Run `make download-public` then `make pseudobulk`. The initial run uses free
-CloudShell with a two-hour process limit and one BLAS thread. After completion,
-`scripts/export-public-batch.py` backs up archives, outputs, config and QC to
-private encrypted S3 and verifies every object by streaming SHA-256 read-back.
+For local execution, run `make download-public` then `make pseudobulk`. The
+CloudShell run instead uses `scripts/run-public-checkpointed.py` under an outer
+two-hour timeout, with one BLAS thread. It backs up each source immediately after
+checksum validation and each line immediately after aggregation. Every object
+is read back from private encrypted S3 and checked by SHA-256. Logs and run state
+are persisted in the CloudShell home directory and S3 during execution.
+
+```bash
+timeout 7200 python3 scripts/run-public-checkpointed.py \
+  --bucket vcc-2026-artifacts-706098201643-us-east-2 \
+  --prefix public/replogle_2022/001_replogle_pseudobulk
+```
+
+This supervisor uses system Python with boto3 for AWS access and `.venv/bin/python`
+for the pinned scientific environment. Use `--resume` to reuse existing local artifacts whose hashes match the saved
+checkpoint manifest. This is for recovery of this same experiment, not reuse after
+changing its scientific configuration. The run records original and resume commits.
+An interrupted run does not automatically restore remote checkpoints; inspect the
+S3 `run-state.json` before restarting. Restore verified artifacts and the manifest
+to `~/.vcc-cloud/public-run-state.json` first if local scratch has been lost. The
+older all-at-end export script is not the checkpointed execution path.
+
+To restore the processed tables in an authenticated AWS environment:
+
+```bash
+aws s3 sync \
+  s3://vcc-2026-artifacts-706098201643-us-east-2/public/replogle_2022/001_replogle_pseudobulk/data/processed/001_replogle_pseudobulk/ \
+  data/processed/001_replogle_pseudobulk/ --region us-east-2
+```
+
+Compare restored file SHA-256 hashes with the committed checkpoint manifest
+before training. Raw archives remain backed up separately for later single-cell
+DE evaluation. CloudShell does not incur EC2 compute charges; retained S3 objects
+continue to use billable storage.

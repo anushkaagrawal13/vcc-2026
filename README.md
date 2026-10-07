@@ -169,8 +169,12 @@ to get a locally convenient but invalid submission.
   the repo and call its modules; they do not contain the pipeline. Publish only
   permitted processed public-data tables as a Kaggle Dataset when ready.
 
-The null submission gate is complete. The next milestone is verified Replogle
-pseudobulks, followed by the K562 → RPE1 transfer experiment.
+The null submission and Replogle pseudobulk gates are complete. K562 (310,385
+cells) and RPE1 (247,914 cells) produced 38,550,448 tidy rows, backed up in private
+S3 with SHA-256 read-back verification. All 20 tests passed in CloudShell; no
+EC2 was launched for this step. QC, cohort counts and the backup manifest are
+committed under `results/001_replogle_pseudobulk/`. The next milestone is the
+K562 → RPE1 transfer experiment; no trained-model result is claimed yet.
 Reassess hosting
 costs after measuring actual runtime and storage needs; this is an initial
 project compute plan, not a commitment to an always-on server.
@@ -209,10 +213,11 @@ zero-score anchor.
 
 1. Completed: null entry `Axby4yc5z8rw49HHPjz7` is published at −0.03350.
    All six raw/scaled metrics, panel, partition and anchor IDs are committed.
-2. Download the smaller Replogle K562/RPE1 panels first (about 9.9/8.1 GB), inspect
-   their count layers and guide/batch annotations, then pseudobulk with matched
-   controls. Define the expression scale explicitly. Keep RPE1 perturbation
-   outcomes out of feature fitting, priors, scaling and hyperparameter selection.
+2. Completed: Replogle K562/RPE1 downloaded, checksummed and pseudobulked with
+   gem-group-matched controls on an explicit log1p-CP10k scale. All 14 artifacts
+   are backed up and verified. Three RPE1 targets with missing Ensembl IDs are
+   preserved as unmapped groups. Keep RPE1 perturbation outcomes out of feature
+   fitting, priors, scaling and hyperparameter selection.
 3. Fit ridge on K562 using target-gene baseline expression. Freeze choices on
    K562-only folds; report shared-target and unseen-target RPE1 cohorts, zero-delta
    and nearest-line comparators. This is a transfer estimate for that pair, not a

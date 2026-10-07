@@ -1,0 +1,16 @@
+{
+  "counts": {
+    "shared_target_ids": 2055,
+    "RPE1_unseen_target_ids": 335,
+    "RPE1_unmapped_target_ids": 3,
+    "common_output_gene_ids": 7226
+  },
+  "unmapped_target_ids": [
+    "UNMAPPED:NEDD8-MDP1",
+    "UNMAPPED:PRSS50",
+    "UNMAPPED:RBM14-RBM4"
+  ],
+  "full_cohorts_uri": "s3://vcc-2026-artifacts-706098201643-us-east-2/public/replogle_2022/001_replogle_pseudobulk/results/001_replogle_pseudobulk/cohorts.json",
+  "full_cohorts_sha256": "f744f5e386e51c4698695495b5c513a3edf27fffa59ff5b69b22dda868e53031",
+  "selection": "Metadata-only overlap; no held-out outcome-based selection or tuning."
+}

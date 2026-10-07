@@ -1,20 +1,26 @@
 {
-  "status": "incomplete_no_durable_outputs",
-  "checked_utc": "2026-10-06T22:54:13.398141+00:00",
+  "status": "complete_backed_up",
+  "completed_utc": "2026-10-06T23:33:26.279422+00:00",
   "execution_environment": "AWS CloudShell",
   "ec2_launched": false,
-  "tests_passed": 18,
-  "last_verified": {
-    "K562_download": "publisher MD5 verified",
-    "K562_archive_bytes": 1963059148,
-    "RPE1_download": "started; completion not verified"
-  },
-  "recovery_check": {
-    "s3_prefix": "s3://vcc-2026-artifacts-706098201643-us-east-2/public/replogle_2022/001_replogle_pseudobulk/",
-    "objects_found": 0,
-    "temporary_run_log_present": false,
-    "temporary_export_log_present": false
-  },
-  "conclusion": "CloudShell environment restarted and temporary state is unavailable. No completed pseudobulk or verified backup can be claimed. Exact failure stage is unknown.",
-  "required_before_rerun": "Checkpoint each verified source and each completed line to durable storage immediately; persist logs and progress outside /tmp. Avoid an export step that only runs after both lines finish."
+  "tests_passed": 20,
+  "test_command": ".venv/bin/python -m pytest -q",
+  "test_elapsed_seconds": 3.94,
+  "s3_prefix": "s3://vcc-2026-artifacts-706098201643-us-east-2/public/replogle_2022/001_replogle_pseudobulk/",
+  "verified_artifacts": 14,
+  "verified_artifact_bytes": 5811970524,
+  "verification": "Each artifact streamed back from S3 and SHA-256 matched; final manifest and cohort file fetched from S3 after CloudShell reconnect; local QC hashes match manifest.",
+  "manifest": "backup_manifest.json",
+  "source_commit": "a302aa45af5e10f9d87e392faf0679903ae310ba",
+  "resume_commits": [
+    "2b6837cb19b9ff96d54df94e934a267ba7b0b5d7"
+  ],
+  "model_training_performed": false,
+  "recovery_notes": [
+    "Initial attempt lost temporary outputs; see attempt1_status.json.",
+    "Checkpointed attempt stopped at missing Ensembl IDs for 458 RPE1 cells. Three targets retained as UNMAPPED:<symbol>; two regression tests added.",
+    "Resumed from eight verified artifacts without redownloading public data or recomputing K562.",
+    "All 14 artifacts durably verified before CloudShell reconnected again."
+  ],
+  "cost_notes": "No EC2 compute or EBS disk created for this step. Private S3 storage and requests remain billable."
 }

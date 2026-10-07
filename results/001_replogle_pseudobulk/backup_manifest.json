@@ -1,0 +1,83 @@
+{
+  "status": "complete_backed_up",
+  "files": [
+    {
+      "path": "data/raw/replogle_2022/K562_essential_raw_singlecell_01.h5ad.gz",
+      "bytes": 1963059148,
+      "sha256": "f2aa23b591152e0345a16b35d073b549aca6ec79b93eaa5b114df2d6827ebbc7"
+    },
+    {
+      "path": "data/raw/replogle_2022/K562_essential_raw_singlecell_01.h5ad.gz.json",
+      "bytes": 695,
+      "sha256": "3aa615e85217882ed5ad6eccd3e51ab21112c424e05f98cd25d0c9597f45e967"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/K562_control_baseline.parquet",
+      "bytes": 288975,
+      "sha256": "e3b3e528784a0779ad6818e1680645542fd3e3f9b17f96edba8263b6ffcbdbb4"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/K562_matched_strata.parquet",
+      "bytes": 154211,
+      "sha256": "677f83035e05891a211e63f62513765e6f291ab0aab7e7e749d6f059508604f5"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/K562_pseudobulk.parquet",
+      "bytes": 1048180444,
+      "sha256": "ccd0f03e6d338d2bc184eb7062feca7df9110d1410694a8b5ac1dd4d062e1909"
+    },
+    {
+      "path": "results/001_replogle_pseudobulk/K562_qc.json",
+      "bytes": 2362,
+      "sha256": "681f2dca6c8a0824163f2cc8a638ffcb75ef3cf860ec35974b6cce29d772810b"
+    },
+    {
+      "path": "data/raw/replogle_2022/rpe1_raw_singlecell_01.h5ad.gz",
+      "bytes": 1562199423,
+      "sha256": "a944be520c64ddce38bf1c2417ca8e0c63fc9fa17b70302c1450a08a226cf901"
+    },
+    {
+      "path": "data/raw/replogle_2022/rpe1_raw_singlecell_01.h5ad.gz.json",
+      "bytes": 686,
+      "sha256": "1fb5450dc87992f7763c23cd3d0efe9b62a233bb36dde9b2e8db2cf3e0e6aa2b"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/RPE1_control_baseline.parquet",
+      "bytes": 294889,
+      "sha256": "9f07f62f7a14282c852f1f063d5f4ab1393eebab5462e8b50a738c3193681d2f"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/RPE1_matched_strata.parquet",
+      "bytes": 195376,
+      "sha256": "5d547a95646d23679ce2747a6b0dae513268a2ba19355feef4207df1b591ad85"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/RPE1_pseudobulk.parquet",
+      "bytes": 1237369086,
+      "sha256": "c136a1c10eb89d979a5931c2631a5de382437b1db04d39328eeb8ad65d3c44fb"
+    },
+    {
+      "path": "results/001_replogle_pseudobulk/RPE1_qc.json",
+      "bytes": 2605,
+      "sha256": "50b4191c14071fe5dc563eaf0f0b276f562c9d032f0b16ca81b37b5d89fd7fb1"
+    },
+    {
+      "path": "results/001_replogle_pseudobulk/cohorts.json",
+      "bytes": 221535,
+      "sha256": "f744f5e386e51c4698695495b5c513a3edf27fffa59ff5b69b22dda868e53031"
+    },
+    {
+      "path": "config/001_replogle_pseudobulk.yaml",
+      "bytes": 1089,
+      "sha256": "9b67309b05fa70dabb55fcf068ef1b179b93edc9257ad8af7da05a8af13198ec"
+    }
+  ],
+  "source_commit": "a302aa45af5e10f9d87e392faf0679903ae310ba",
+  "stage": "complete",
+  "updated_utc": "2026-10-06T23:33:26.279422+00:00",
+  "resume_commits": [
+    "2b6837cb19b9ff96d54df94e934a267ba7b0b5d7"
+  ],
+  "execution_environment": "AWS CloudShell; no EC2 launched",
+  "verification": "Every listed object read back and SHA-256 matched"
+}

@@ -1,0 +1,71 @@
+{
+  "dataset": "replogle_2022_K562_essential",
+  "line": "K562",
+  "role": "train",
+  "n_cells": 310385,
+  "n_control_cells": 10691,
+  "n_target_cells": 299694,
+  "n_targets": 2057,
+  "n_unique_target_ids": 2057,
+  "n_output_genes": 8563,
+  "n_gem_groups": 48,
+  "minimum_controls_per_gem": 116,
+  "min_target_cells": 5,
+  "min_guide_pairs_per_target": 1,
+  "all_X_counts_integer_nonnegative": true,
+  "maximum_count": 3161.0,
+  "minimum_fraction_of_total_UMI_in_retained_genes": 0.7518115942028986,
+  "expression_scale": "log1p_counts_per_10000_total_UMI",
+  "matching": "dataset,line,assay_type,gem_group",
+  "aggregation": "cell-weighted target mean minus target-cell-weighted matched-gem control means",
+  "no_target_cell_filtering": true,
+  "elapsed_seconds": 173.15414997000016,
+  "tidy_rows": 17614091,
+  "outputs": [
+    {
+      "name": "K562_control_baseline.parquet",
+      "bytes": 288975,
+      "sha256": "e3b3e528784a0779ad6818e1680645542fd3e3f9b17f96edba8263b6ffcbdbb4"
+    },
+    {
+      "name": "K562_matched_strata.parquet",
+      "bytes": 154211,
+      "sha256": "677f83035e05891a211e63f62513765e6f291ab0aab7e7e749d6f059508604f5"
+    },
+    {
+      "name": "K562_pseudobulk.parquet",
+      "bytes": 1048180444,
+      "sha256": "ccd0f03e6d338d2bc184eb7062feca7df9110d1410694a8b5ac1dd4d062e1909"
+    }
+  ],
+  "config_sha256": "9b67309b05fa70dabb55fcf068ef1b179b93edc9257ad8af7da05a8af13198ec",
+  "source": {
+    "source": {
+      "dataset": "replogle_2022_K562_essential",
+      "line": "K562",
+      "role": "train",
+      "name": "K562_essential_raw_singlecell_01.h5ad",
+      "url": "https://ndownloader.figshare.com/files/35773219",
+      "figshare_file_id": 35773219,
+      "bytes": 10661879995,
+      "md5": "4f1122ce1c7f13299a68df6459a266d3",
+      "license": "CC-BY-4.0",
+      "sampled_day": 6
+    },
+    "raw_bytes": 10661879995,
+    "raw_sha256": "3e5a63a9e892b21029bb55fca4e12517a49aad7af6c14133ca63d12cf68c6cee",
+    "raw_md5": "4f1122ce1c7f13299a68df6459a266d3",
+    "published_md5_verified": true,
+    "archive_bytes": 1963059148,
+    "archive_sha256": "f2aa23b591152e0345a16b35d073b549aca6ec79b93eaa5b114df2d6827ebbc7"
+  },
+  "peak_process_rss_bytes": 1550839808,
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "h5py": "3.16.0",
+    "pyarrow": "25.0.1",
+    "indexed-gzip": "1.10.3"
+  }
+}

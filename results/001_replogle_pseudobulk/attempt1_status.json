@@ -1,0 +1,20 @@
+{
+  "status": "incomplete_no_durable_outputs",
+  "checked_utc": "2026-10-06T22:54:13.398141+00:00",
+  "execution_environment": "AWS CloudShell",
+  "ec2_launched": false,
+  "tests_passed": 18,
+  "last_verified": {
+    "K562_download": "publisher MD5 verified",
+    "K562_archive_bytes": 1963059148,
+    "RPE1_download": "started; completion not verified"
+  },
+  "recovery_check": {
+    "s3_prefix": "s3://vcc-2026-artifacts-706098201643-us-east-2/public/replogle_2022/001_replogle_pseudobulk/",
+    "objects_found": 0,
+    "temporary_run_log_present": false,
+    "temporary_export_log_present": false
+  },
+  "conclusion": "CloudShell environment restarted and temporary state is unavailable. No completed pseudobulk or verified backup can be claimed. Exact failure stage is unknown.",
+  "required_before_rerun": "Checkpoint each verified source and each completed line to durable storage immediately; persist logs and progress outside /tmp. Avoid an export step that only runs after both lines finish."
+}
