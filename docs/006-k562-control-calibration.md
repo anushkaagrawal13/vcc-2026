@@ -1,8 +1,9 @@
 # K562 control-only count-generator calibration
 
-Status: implemented and locally tested; the real K562 experiment has NOT run.
-No empirical winner, K562 score, or new submission is claimed. Browser-control
-tools were unavailable for this turn and the local AWS CLI had no credentials.
+Status: completed in AWS CloudShell on October 13, 2026, using source commit
+`3ac2bd967adccbb65f47490bc7dc4d5059c6292f`. The pinned suite passed all 41 tests.
+Calibration controls selected `mean_calibrated_16` before audit expression was
+read. No perturbation prediction, official score, or new submission is claimed.
 
 ## Question and boundaries
 
@@ -88,17 +89,58 @@ an identifiable local log and attempt to back it up. Log export failure is repor
 The existing S3 storage/request billing still applies; no new compute product is
 provisioned. Retrieve exact metric reports and commit them after execution.
 
+## Observed results
+
+All entries below average the three predeclared generation seeds. Lower is better.
+Only calibration mean error determined the frozen choice.
+
+| Generator | Calibration mean-log RMSE | Audit mean-log RMSE | Audit variance-log RMSE | Audit dropout MAE |
+|---|---:|---:|---:|---:|
+| Legacy | 0.059402 | 0.057217 | 0.075210 | 0.101699 |
+| 8 correction iterations | 0.048610 | 0.047399 | 0.065858 | 0.070475 |
+| **16 correction iterations (selected)** | **0.046522** | **0.045400** | **0.058507** | **0.061400** |
+
+Against legacy on audit controls, the selected correction reduced mean-log RMSE
+20.7%, variance-log RMSE 22.2%, and dropout MAE 39.6%. No offset hit its bound and
+no requested mean was negative. All generated counts passed nonnegative-integer
+checks. The selected correction still clips a small fraction of shifted donor
+log values at zero; exact QC and iteration histories are in the frozen report.
+
+Fit-versus-audit real controls differed by 0.027451 mean-log RMSE, 0.015542
+variance-log RMSE and 0.026513 dropout MAE. These describe this finite control
+split; they are not a theoretical noise floor. Three generation seeds are not
+three independent biological replicates. No perturbed K562 cells or RPE1 files
+were read for this experiment, and the official scorer was not run.
+
+The scientific command took 115.1 seconds with 439,209,984 bytes peak RSS
+(about 419 MiB); this excludes environment setup, input restore and backup.
+All 17 artifacts (11,085,979 bytes) were uploaded with AES256 encryption and fully
+read back for SHA-256 verification. The final manifest was completed at
+`2026-10-13T23:22:26.375515+00:00` and independently retrieved from S3.
+Its SHA-256 is
+`4c4b47ddbc7d7c35ca947f3698bacd8af061af8aebd7091d5a5f4f3d02c79a7f`.
+No EC2 was launched; a read-only check found no running or pending instances in
+us-east-2. The worker exited successfully.
+
+Exact `metrics.json`, `frozen_selection.json` and `backup_manifest.json` are
+committed under `results/006_k562_control_calibration/`. The first two were
+verified against the final S3 manifest after retrieval. `metrics.csv` is a local
+derived summary and `status.json` records completion; neither is part of the
+original 17-artifact backup. The runbook above documents the completed procedure;
+its overwrite guard prevents rerunning into these existing output directories.
+
 ## Verification and next gate
 
-Ten targeted tests passed locally: the three existing adapter tests plus seven new
-numerical/split/selection tests. These used the available local Python 3.12.14 and
-NumPy 2.3.5, not the pinned cloud scientific environment. The full pinned-environment
-suite and real-file integration remain cloud-run gates. Syntax and whitespace
-checks passed. A generated-data test confirms correction reduces mean error on
-independent synthetic draws; that is not evidence of improvement on K562.
+Ten targeted tests passed locally before launch. CloudShell then rebuilt the
+pinned environment, verified package versions and ran all **41 tests successfully**
+(the launcher's suite took 7.86 seconds). The real-file integration and complete
+backup verification also passed. Documentation/results were updated afterward;
+no scientific code or candidate-selection settings changed.
 
-After this batch, inspect the frozen winner and all audit diagnostics. A setting
-selected here is provisional: test fixed response models with K562 perturbation
-folds (basis, priors and predictions fitted without fold targets) before freezing
-the final count adapter. Do not infer transfer or DE quality from a null-only test,
-or retune from the repeatedly inspected RPE1 panel.
+The 16-iteration correction is provisional. Next test fixed response models with
+K562 perturbation folds (basis, priors and predictions fitted without fold targets),
+comparing the selected correction with legacy count generation using official
+expression/DE diagnostics. Calibration must use fit controls and requested deltas,
+not held-out perturbation outcomes. Freeze the final adapter only after that gate.
+Do not infer transfer or DE quality from this null-only test, or retune from the
+repeatedly inspected RPE1 panel.

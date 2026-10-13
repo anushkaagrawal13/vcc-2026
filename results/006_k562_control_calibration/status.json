@@ -1,0 +1,32 @@
+{
+  "status": "complete",
+  "completed_utc": "2026-10-13T23:22:26.375515+00:00",
+  "scope": "K562 control-only null calibration, not perturbation prediction or official VCC scoring",
+  "source_commit": "3ac2bd967adccbb65f47490bc7dc4d5059c6292f",
+  "execution_environment": "AWS CloudShell, us-east-2, Python 3.12.2 with pinned requirements",
+  "selected_generator": "mean_calibrated_16",
+  "selection_frozen_before_audit": true,
+  "tests": {
+    "full_pinned_suite_passed": 41,
+    "elapsed_seconds": 7.86
+  },
+  "scientific_run_elapsed_seconds": 115.12402638699996,
+  "peak_rss_bytes": 439209984,
+  "backup": {
+    "manifest_uri": "s3://vcc-2026-artifacts-706098201643-us-east-2/public/replogle_2022/006_k562_control_calibration/backup_manifest.json",
+    "manifest_sha256": "4c4b47ddbc7d7c35ca947f3698bacd8af061af8aebd7091d5a5f4f3d02c79a7f",
+    "artifact_count": 17,
+    "artifact_bytes": 11085979,
+    "all_artifacts_read_back_sha256_verified": true,
+    "local_exact_reports_verified_against_manifest": true
+  },
+  "ec2_launched": false,
+  "running_or_pending_ec2_instances_observed_in_us_east_2": 0,
+  "official_scorer_run": false,
+  "leaderboard_submission_made": false,
+  "derived_local_files": [
+    "metrics.csv",
+    "status.json"
+  ],
+  "next_gate": "Evaluate the fixed 16-iteration correction against the legacy adapter on K562 perturbation folds, using fold-local basis, priors and predictions; no RPE1 retuning."
+}

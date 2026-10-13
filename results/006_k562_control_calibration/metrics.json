@@ -1,0 +1,110 @@
+{
+  "status": "complete",
+  "scope": "K562 control-only null calibration, not perturbation prediction or official VCC scoring",
+  "config_sha256": "ca7fc482398b5f037160aa2851c931580025abf23745dd2d1b833f7342e5f5e4",
+  "raw": {
+    "path": "data/raw/replogle_2022/K562_essential_raw_singlecell_01.h5ad.gz",
+    "bytes": 1963059148,
+    "sha256": "f2aa23b591152e0345a16b35d073b549aca6ec79b93eaa5b114df2d6827ebbc7"
+  },
+  "selected": "mean_calibrated_16",
+  "selection_scores": {
+    "legacy": 0.05940222854951709,
+    "mean_calibrated_16": 0.04652176821878762,
+    "mean_calibrated_8": 0.048610063963894605
+  },
+  "frozen_selection_sha256": "d15d4c942c7f078008af70047ed4321656949eeb1ace51453eb123d1407ebd2a",
+  "audit_rows": [
+    {
+      "candidate": "legacy",
+      "seed": 72001,
+      "mean_log_rmse": 0.05582039091225046,
+      "variance_log_rmse": 0.07295626478811454,
+      "dropout_mae": 0.0987259868036903
+    },
+    {
+      "candidate": "legacy",
+      "seed": 72002,
+      "mean_log_rmse": 0.05832240884861553,
+      "variance_log_rmse": 0.07610685604149514,
+      "dropout_mae": 0.10153847463895052
+    },
+    {
+      "candidate": "legacy",
+      "seed": 72003,
+      "mean_log_rmse": 0.05750928290430712,
+      "variance_log_rmse": 0.07656586250243967,
+      "dropout_mae": 0.10483390264315465
+    },
+    {
+      "candidate": "mean_calibrated_8",
+      "seed": 72001,
+      "mean_log_rmse": 0.04611781884821428,
+      "variance_log_rmse": 0.06389650329162283,
+      "dropout_mae": 0.06792121627934135
+    },
+    {
+      "candidate": "mean_calibrated_8",
+      "seed": 72002,
+      "mean_log_rmse": 0.049220872831094796,
+      "variance_log_rmse": 0.06653587578531006,
+      "dropout_mae": 0.07037241134337653
+    },
+    {
+      "candidate": "mean_calibrated_8",
+      "seed": 72003,
+      "mean_log_rmse": 0.04685979532140223,
+      "variance_log_rmse": 0.06714296045901659,
+      "dropout_mae": 0.07313015784966329
+    },
+    {
+      "candidate": "mean_calibrated_16",
+      "seed": 72001,
+      "mean_log_rmse": 0.04469484865457943,
+      "variance_log_rmse": 0.05665585762228485,
+      "dropout_mae": 0.05908535754603137
+    },
+    {
+      "candidate": "mean_calibrated_16",
+      "seed": 72002,
+      "mean_log_rmse": 0.0470489458171909,
+      "variance_log_rmse": 0.05933000529050162,
+      "dropout_mae": 0.061414296975359106
+    },
+    {
+      "candidate": "mean_calibrated_16",
+      "seed": 72003,
+      "mean_log_rmse": 0.04445625293685339,
+      "variance_log_rmse": 0.059534969788132636,
+      "dropout_mae": 0.06370126805247382
+    }
+  ],
+  "fit_calibration_split_noise": {
+    "mean_log_rmse": 0.02760424485259468,
+    "variance_log_rmse": 0.015560472829259672,
+    "dropout_mae": 0.02712209830407308
+  },
+  "fit_audit_split_noise": {
+    "mean_log_rmse": 0.027451343243899733,
+    "variance_log_rmse": 0.015542356742206621,
+    "dropout_mae": 0.02651305033282728
+  },
+  "n_genes": 8563,
+  "n_batches": 48,
+  "n_fit": 576,
+  "n_calibration": 192,
+  "n_audit": 192,
+  "source_commit": "3ac2bd967adccbb65f47490bc7dc4d5059c6292f",
+  "versions": {
+    "numpy": "2.5.3",
+    "h5py": "3.16.0",
+    "indexed-gzip": "1.10.3"
+  },
+  "elapsed_seconds": 115.12402638699996,
+  "peak_rss_bytes": 439209984,
+  "limitations": [
+    "Synthetic control transport adds sampling noise; mean correction cannot guarantee correct dispersion",
+    "One K562 control split and three generated seeds do not establish generalization",
+    "Candidate selection is provisional until K562 perturbation-fold evaluation; no RPE1 retuning"
+  ]
+}

@@ -1,13 +1,15 @@
 {
-  "status": "prepared_not_run",
-  "real_k562_experiment_run": false,
-  "selected_generator": null,
+  "status": "completed",
+  "real_k562_experiment_run": true,
+  "selected_generator": "mean_calibrated_16",
   "local_targeted_tests": 10,
   "local_python": "3.12.14",
   "local_numpy": "2.3.5",
-  "pinned_cloud_suite_run": false,
+  "pinned_cloud_suite_run": true,
   "ec2_launched": false,
-  "blocker": "Browser-control tools unavailable in this turn; local AWS CLI reported no credentials",
+  "blocker": null,
   "config": "config/006_k562_control_calibration.yaml",
-  "runbook": "docs/006-k562-control-calibration.md"
+  "runbook": "docs/006-k562-control-calibration.md",
+  "pinned_cloud_tests_passed": 41,
+  "completion_evidence": "results/006_k562_control_calibration/status.json"
 }

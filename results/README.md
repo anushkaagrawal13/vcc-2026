@@ -223,9 +223,31 @@ PDS and metric-specific DE gates limit interpretation. See
 `docs/005-count-rehearsal.md`, exact per-target CSVs and cohort counts for details.
 The approximate count adapter needs K562-only calibration before challenge use.
 
-## 006: K562 control calibration — pending execution
+## 006: K562 control calibration — completed October 13
 
-Code, experiment config and bounded CloudShell launcher are prepared. Ten targeted
-local tests passed; real K562 metrics and a selected generator do not yet exist.
-See `006_k562_control_calibration_readiness.json` for the verification boundary and
-`docs/006-k562-control-calibration.md` for the exact predeclared split and command.
+Calibration controls selected 16 correction iterations before audit expression
+was read. Mean metrics across the three declared generation seeds:
+
+| Generator | Audit mean-log RMSE ↓ | Audit variance-log RMSE ↓ | Audit dropout MAE ↓ |
+|---|---:|---:|---:|
+| Legacy | 0.057217 | 0.075210 | 0.101699 |
+| 8 correction iterations | 0.047399 | 0.065858 | 0.070475 |
+| **16 correction iterations (selected)** | **0.045400** | **0.058507** | **0.061400** |
+
+The selected generator reduces these errors by 20.7%, 22.2% and 39.6%, respectively.
+This is a K562 null-control diagnostic, not perturbation prediction or an official
+VCC score. It used 576 fit, 192 calibration and 192 audit controls balanced across
+48 gem groups and all 8,563 K562 genes. No RPE1 outcomes entered this experiment.
+
+**41 pinned-environment tests passed.** The scientific command took 115.1 seconds
+and about 419 MiB peak RSS. All **17 artifacts / 11,085,979 bytes** passed full S3
+read-back SHA-256 verification. No EC2 was launched.
+
+Exact evidence: [metrics](006_k562_control_calibration/metrics.json),
+[frozen selection](006_k562_control_calibration/frozen_selection.json),
+[backup manifest](006_k562_control_calibration/backup_manifest.json), and
+[completion status](006_k562_control_calibration/status.json). The CSV is derived
+from those exact reports. See the
+[run report](../docs/006-k562-control-calibration.md) for the predeclared protocol.
+Next: compare the fixed correction and legacy adapter on K562 perturbation folds
+before freezing the final generator; no RPE1 retuning or new submission yet.

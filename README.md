@@ -3,14 +3,23 @@
 CPU-first experiments for the 2026 Virtual Cell Challenge. Start with a real
 schema round-trip; only then build public-data pseudobulk models.
 
-## Current next experiment
+## Current result and next experiment
 
-Experiment 006 implements K562-only control calibration with disjoint, batch-balanced
-fit/calibration/audit splits. Ten targeted tests passed locally. **The real K562
-run is pending** because this turn had no CloudShell browser control or local AWS
-credentials. The [bounded launcher and run plan](docs/006-k562-control-calibration.md)
-restore only the verified K562 archive, enforce a 45-minute cap and back up results.
-No calibrated generator has yet been selected from real data.
+Experiment 006 completed in AWS CloudShell on October 13. Calibration controls
+selected the 16-iteration mean correction before audit expression was read. On
+held-out K562 controls, mean log-expression RMSE fell from **0.05722 to 0.04540**
+(20.7%); variance error fell 22.2% and dropout error 39.6%. These are null-control
+diagnostics, not official VCC scores or evidence of better perturbation prediction.
+
+**41 tests passed** in the pinned cloud environment. All 17 artifacts were backed
+up to private S3 and read back for SHA-256 verification. No EC2 was launched.
+See the [experiment report](docs/006-k562-control-calibration.md) and
+[exact results](results/006_k562_control_calibration/metrics.json).
+
+Next: compare the fixed correction with the legacy count adapter on K562
+perturbation folds, keeping response basis, priors and predictions fold-local.
+Evaluate official expression/DE diagnostics before freezing the adapter and
+running a broader predeclared transfer check. Do not retune on RPE1.
 
 ## Latest completed work
 
@@ -19,9 +28,9 @@ No calibrated generator has yet been selected from real data.
 - Experiment 005: generated fresh single-cell counts and ran the pinned official
   scorer on six predetermined public RPE1 targets; 34 tests passed. The LightGBM
   pseudobulk gain did not translate into better expression error or PDS here.
-- Next: calibrate and ablate the count generator on K562-only splits, freeze it,
-  then run a broader predeclared transfer check. No additional leaderboard
-  submission is justified by this small diagnostic.
+- Experiment 006: corrected part of the generator's null-distribution bias using
+  K562 controls only. The selected correction is provisional until tested on
+  perturbations; no additional leaderboard submission is justified yet.
 
 See [count rehearsal](docs/005-count-rehearsal.md) and
 [Adamson audit](docs/004-adamson-audit.md). Exact summaries are committed under

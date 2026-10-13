@@ -1,0 +1,92 @@
+{
+  "status": "complete_backed_up",
+  "execution_environment": "AWS CloudShell CPU; no EC2 launched",
+  "files": [
+    {
+      "path": "results/006_k562_control_calibration/metrics.json",
+      "bytes": 3538,
+      "sha256": "9b269f650423ee65fdcc02c465a7bb36ee346e3bc1b0c69c09479cb239e0a721"
+    },
+    {
+      "path": "results/006_k562_control_calibration/frozen_selection.json",
+      "bytes": 5885,
+      "sha256": "d15d4c942c7f078008af70047ed4321656949eeb1ace51453eb123d1407ebd2a"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/legacy_seed_72002.npz",
+      "bytes": 748674,
+      "sha256": "1cb80f488c2707e95ed6cf66e7b4198ae492a945006c354a8939d4f2450e6222"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/mean_calibrated_8_seed_72003.npz",
+      "bytes": 771859,
+      "sha256": "3d65c29abaed775300aac470f4c747af607e5edb25629d28389d1b667b01becf"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/mean_calibrated_16_calibration.npz",
+      "bytes": 65264,
+      "sha256": "6c773a95e691893d61bd239f69d0009e7fef938ba4995be6ccf70ef64bb6cc80"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/mean_calibrated_8_seed_72001.npz",
+      "bytes": 779629,
+      "sha256": "2079e47dea182d65b48553f573f985e79054ea87e0a80d355f5bba030df0be5e"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/reference_splits.npz",
+      "bytes": 4017093,
+      "sha256": "89998de48b42359250d60bdb48ae8a54151ac37a5fdb0ecf46fe61c91f48540d"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/mean_calibrated_16_seed_72002.npz",
+      "bytes": 780415,
+      "sha256": "ec07fbf17c1426d839e109ffff0c3cf058229fc4e670586fc5ede00ae5d09200"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/mean_calibrated_16_seed_72003.npz",
+      "bytes": 775602,
+      "sha256": "56c20e177ae4c6cac6f8eb4c226af9b5ea376a03f6a4e0b551d2682c6ddcf12a"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/legacy_seed_72001.npz",
+      "bytes": 753859,
+      "sha256": "9f7de5e34f0d6ca10659d8858fbdc22714d9f56636f993379bf9e0a54ab80859"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/mean_calibrated_8_seed_72002.npz",
+      "bytes": 776299,
+      "sha256": "13594eac5e1d46df48727fec7eae922f9b47bbe728a88b995c71848e2d6a0814"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/mean_calibrated_8_calibration.npz",
+      "bytes": 65269,
+      "sha256": "b797bab9cfc19d8d73e252d7c252f9fa319e71cadfd9a2a58f9a14e2dfc146bc"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/cell_selection.json",
+      "bytes": 11645,
+      "sha256": "cc1e4d910d0991135b1726aa9d9eb6df0624aeb2f87f4d26ae518924e37c3fa3"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/mean_calibrated_16_seed_72001.npz",
+      "bytes": 784091,
+      "sha256": "4bb268e1af78efc32cc8ff5b1d725495c2dd2ed1d7221c9c0c05c3a482d72dba"
+    },
+    {
+      "path": "data/processed/006_k562_control_calibration/legacy_seed_72003.npz",
+      "bytes": 744681,
+      "sha256": "fac1bd602dd4afb5b3a5aa5d1fcd60f58875ebc7458db2f4c340b37329dd7034"
+    },
+    {
+      "path": "config/006_k562_control_calibration.yaml",
+      "bytes": 713,
+      "sha256": "ca7fc482398b5f037160aa2851c931580025abf23745dd2d1b833f7342e5f5e4"
+    },
+    {
+      "path": "requirements.lock.txt",
+      "bytes": 1463,
+      "sha256": "7c7a055543f8ff775b1364dfd20fe92a727585add4a9cc7c8f4f3ca311eb2010"
+    }
+  ],
+  "completed_utc": "2026-10-13T23:22:26.375515+00:00"
+}
