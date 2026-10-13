@@ -1,0 +1,8 @@
+experiment: 002_ridge_transfer
+input_dir: data/processed/001_replogle_pseudobulk
+input_manifest: results/001_replogle_pseudobulk/backup_manifest.json
+results_dir: results/002_ridge_transfer
+artifact_dir: data/processed/002_ridge_transfer
+alphas: [0.01, 0.1, 1, 10, 100, 1000, 10000]
+folds: 5
+seed: 2026

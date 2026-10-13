@@ -23,3 +23,7 @@ download-public:
 	$(PYTHON) -m src.data.replogle --config config/001_replogle_pseudobulk.yaml
 pseudobulk:
 	$(PYTHON) -m src.data.pseudobulk --config config/001_replogle_pseudobulk.yaml
+
+.PHONY: transfer
+transfer:
+	$(PYTHON) -m src.transfer --config config/002_ridge_transfer.yaml
