@@ -17,7 +17,7 @@ env=dict(os.environ,OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1')
 try:
     with log.open('wb') as f:
         subprocess.run(['.venv/bin/python','-m','pytest','-q'],cwd=root,env=env,stdout=f,stderr=subprocess.STDOUT,check=True,timeout=180)
-        subprocess.run(['.venv/bin/python','-m','src.rich_transfer','--config','config/003_string_models.yaml'],cwd=root,env=env,stdout=f,stderr=subprocess.STDOUT,check=True,timeout=1800)
+        subprocess.run(['.venv/bin/python','-m','src.rich_transfer','--config','config/003_string_models.yaml','--resume-selection'],cwd=root,env=env,stdout=f,stderr=subprocess.STDOUT,check=True,timeout=1800)
 finally:
     s3.upload_file(str(log),bucket,prefix+'/logs/rich-run.log',ExtraArgs={'ServerSideEncryption':'AES256'})
 files=list((root/'results/003_string_models').glob('*'))+list((root/'data/processed/003_string_models').glob('*'))+list((root/'data/raw/string_v12').glob('*.gz*'))+[root/'config/003_string_models.yaml']

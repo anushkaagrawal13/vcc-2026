@@ -53,3 +53,21 @@ def test_lightgbm_component_fit_is_deterministic():
     cfg=dict(gbm_learning_rate=.1,gbm_min_data=5,gbm_rounds=5,seed=2026)
     a=fit_components(x,z,7,cfg);b=fit_components(x,z,7,cfg)
     np.testing.assert_equal(predict_components(a,x),predict_components(b,x))
+
+
+def test_chunked_metrics_equal_full_metrics():
+    from src.rich_transfer import chunk_metrics
+    from src.transfer import metrics
+    rng=np.random.default_rng(4);y=rng.normal(size=(290,11));p=y+rng.normal(size=y.shape)
+    mask=np.arange(len(y))%3!=0
+    actual=chunk_metrics(y,p,mask);expected=metrics(y[mask],p[mask])
+    for key in expected:np.testing.assert_allclose(actual[key],expected[key])
+
+
+def test_disk_prediction_matches_memory(tmp_path):
+    from src.rich_transfer import fold_predict
+    rng=np.random.default_rng(6);y=rng.normal(size=(20,12));w=np.ones((25,25));ids=[str(i) for i in range(25)]
+    cfg=dict(rank=3,seed=2026,ridge_alphas=[1],gbm_leaves=[],gbm_rounds=2,gbm_min_data=3,gbm_learning_rate=.1)
+    a,_,_=fold_predict(y,np.arange(20),np.arange(20,25),ids,w,np.arange(25),cfg)
+    b,_,_=fold_predict(y,np.arange(20),np.arange(20,25),ids,w,np.arange(25),cfg,tmp_path)
+    for key in a:np.testing.assert_allclose(a[key],b[key])

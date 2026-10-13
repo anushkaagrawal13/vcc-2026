@@ -30,7 +30,7 @@ def ridge_fit(x,z,alpha):
     return coef,zmean-xmean@coef
 
 
-def fold_predict(y,train_idx,query_idx,all_ids,w,basal,cfg):
+def fold_predict(y,train_idx,query_idx,all_ids,w,basal,cfg,prediction_dir=None):
     """No query outcomes accepted. Basis and priors see reference training y only."""
     mean,basis,z=response_basis(y,cfg['rank'],cfg['seed'])
     tr_ids=np.asarray(all_ids)[train_idx];qu_ids=np.asarray(all_ids)[query_idx]
@@ -40,16 +40,37 @@ def fold_predict(y,train_idx,query_idx,all_ids,w,basal,cfg):
     predictions={'training_mean':np.broadcast_to(mean,(len(query_idx),len(mean)))}
     saved=dict(mean=mean,basis=basis,**{'feature_'+k:v for k,v in state.items()})
     models={}
+    def reconstruct(name,scores):
+        if prediction_dir is None:return mean+scores@basis
+        prediction_dir.mkdir(parents=True,exist_ok=True)
+        result=np.lib.format.open_memmap(prediction_dir/(name+'.npy'),mode='w+',dtype='float64',shape=(len(scores),len(mean)))
+        for start in range(0,len(scores),128):result[start:start+128]=mean+scores[start:start+128]@basis
+        result.flush()
+        return result
     for kind,cols in [('basal',slice(0,2)),('string',slice(None))]:
         for alpha in cfg['ridge_alphas']:
-            name=f'ridge_{kind}_{alpha}';coef,intercept=ridge_fit(xt[:,cols],z,alpha)
-            predictions[name]=mean+(xq[:,cols]@coef+intercept)@basis
+            name=f'ridge_{kind}_{alpha}'
+            if cfg.get('selected_names') and name not in cfg['selected_names']:continue
+            coef,intercept=ridge_fit(xt[:,cols],z,alpha)
+            predictions[name]=reconstruct(name,xq[:,cols]@coef+intercept)
             saved[name+'_coef']=coef;saved[name+'_intercept']=intercept
     for leaves in cfg['gbm_leaves']:
         name=f'gbm_string_{leaves}';model=fit_components(xt,z,leaves,cfg)
-        predictions[name]=mean+predict_components(model,xq)@basis;models[name]=model
+        predictions[name]=reconstruct(name,predict_components(model,xq));models[name]=model
     saved['reference_ids']=tr_ids;saved['reference_scores']=z
     return predictions,saved,models
+
+
+def chunk_metrics(observed,predicted,mask):
+    indices=np.flatnonzero(mask);sse=0.;sae=0.;corr=0.;defined=0
+    for start in range(0,len(indices),128):
+        ix=indices[start:start+128];m=metrics(observed[ix],predicted[ix])
+        n=len(ix)*observed.shape[1];sse+=m['mse']*n;sae+=m['mae']*n
+        if m['pearson_defined_targets']:
+            corr+=m['mean_target_pearson']*m['pearson_defined_targets'];defined+=m['pearson_defined_targets']
+    return dict(mse=sse/(len(indices)*observed.shape[1]),mae=sae/(len(indices)*observed.shape[1]),
+                mean_target_pearson=corr/defined if defined else None,pearson_defined_targets=defined,
+                n_targets=len(indices),n_output_genes=observed.shape[1])
 
 
 def run(config_path):
@@ -74,28 +95,40 @@ def run(config_path):
     basal=np.concatenate([controls[line].mean_log1p_cp10k.reindex(ids[line]).to_numpy() for line in ['K562','RPE1']])
     train=load_deltas(source/'K562_pseudobulk.parquet',ids['K562'],genes)
     folds=np.array_split(np.random.default_rng(cfg['seed']).permutation(len(train)),cfg['folds'])
-    losses={};fold_rows=[]
-    for f,valid in enumerate(folds):
-        tr=np.setdiff1d(np.arange(len(train)),valid)
-        pred,_,_=fold_predict(train[tr],tr,valid,all_ids,w,basal,cfg)
-        for name,p in pred.items():
-            sse=float(np.square(p-train[valid]).sum());losses[name]=losses.get(name,0.)+sse
-            fold_rows.append(dict(fold=f,model=name,mse=sse/train[valid].size))
-        print(json.dumps({'fold_complete':f+1}),flush=True)
-        del pred
-    cv={name:value/train.size for name,value in losses.items()}
-    def choose(prefix):return min((n for n in cv if n.startswith(prefix)),key=lambda n:(cv[n],n))
-    selected={'training_mean':'training_mean','ridge_basal':choose('ridge_basal'),'ridge_string':choose('ridge_string'),'gbm_string':choose('gbm_string')}
-    winner=min(selected,key=lambda name:(cv[selected[name]],name))
-    frozen=dict(selected=selected,cv_mse=cv,fold_metrics=fold_rows,winner=winner,
-                folds=[[ids['K562'][i] for i in f] for f in folds],graph_qc=qc,
-                sources=receipts,config_sha256=digest(config_path),target_ids=ids,output_gene_ids=genes,
-                note='K562-only selection; RPE1 outcomes not yet loaded; RPE1 was evaluated previously in experiment 002.')
-    (out/'frozen_selection.json').write_text(json.dumps(frozen,indent=2)+'\n')
+    selection_path=out/'frozen_selection.json'
+    if cfg.get('resume_selection',False) and selection_path.exists():
+        raise ValueError('Resume is a CLI option, not a change to scientific config')
+    if RESUME and selection_path.exists():
+        frozen=json.loads(selection_path.read_text())
+        if frozen['config_sha256']!=digest(config_path) or frozen['sources']!=receipts:
+            raise ValueError('Selection checkpoint provenance changed')
+        if frozen['target_ids']!=ids or frozen['output_gene_ids']!=genes:
+            raise ValueError('Selection checkpoint axes changed')
+        selected,cv,winner=frozen['selected'],frozen['cv_mse'],frozen['winner']
+        print('Resuming frozen K562 selections; no retuning',flush=True)
+    else:
+        losses={};fold_rows=[]
+        for f,valid in enumerate(folds):
+            tr=np.setdiff1d(np.arange(len(train)),valid)
+            pred,_,_=fold_predict(train[tr],tr,valid,all_ids,w,basal,cfg)
+            for name,p in pred.items():
+                sse=float(np.square(p-train[valid]).sum());losses[name]=losses.get(name,0.)+sse
+                fold_rows.append(dict(fold=f,model=name,mse=sse/train[valid].size))
+            print(json.dumps({'fold_complete':f+1}),flush=True)
+            del pred
+        cv={name:value/train.size for name,value in losses.items()}
+        def choose(prefix):return min((n for n in cv if n.startswith(prefix)),key=lambda n:(cv[n],n))
+        selected={'training_mean':'training_mean','ridge_basal':choose('ridge_basal'),'ridge_string':choose('ridge_string'),'gbm_string':choose('gbm_string')}
+        winner=min(selected,key=lambda name:(cv[selected[name]],name))
+        frozen=dict(selected=selected,cv_mse=cv,fold_metrics=fold_rows,winner=winner,
+                    folds=[[ids['K562'][i] for i in f] for f in folds],graph_qc=qc,
+                    sources=receipts,config_sha256=digest(config_path),target_ids=ids,output_gene_ids=genes,
+                    note='K562-only selection; RPE1 outcomes not yet loaded; RPE1 was evaluated previously in experiment 002.')
+        selection_path.write_text(json.dumps(frozen,indent=2)+'\n')
     # Fit only selected settings, not the whole grid, on all K562 targets.
-    final_cfg={**cfg,'ridge_alphas':sorted(set(int(selected[k].rsplit('_',1)[1]) for k in ['ridge_basal','ridge_string'])),
+    final_cfg={**cfg,'selected_names':list(selected.values()),'ridge_alphas':sorted(set(int(selected[k].rsplit('_',1)[1]) for k in ['ridge_basal','ridge_string'])),
                'gbm_leaves':[int(selected['gbm_string'].rsplit('_',1)[1])]}
-    preds,state,models=fold_predict(train,np.arange(len(train)),np.arange(len(train),len(all_ids)),all_ids,w,basal,final_cfg)
+    preds,state,models=fold_predict(train,np.arange(len(train)),np.arange(len(train),len(all_ids)),all_ids,w,basal,final_cfg,ROOT/'work/003_predictions')
     np.savez_compressed(art/'model_state.npz',**state,output_gene_ids=genes)
     for name,ensemble in models.items():
         for i,m in enumerate(ensemble):m.save_model(str(art/f'{name}_{i}.txt'))
@@ -107,7 +140,7 @@ def run(config_path):
     rows=[]
     for name in ['zero_delta']+list(selected):
         pred=np.zeros_like(held) if name=='zero_delta' else preds[selected[name]]
-        for cohort,mask in masks.items():rows.append(dict(model=name,cohort=cohort,**metrics(held[mask],pred[mask])))
+        for cohort,mask in masks.items():rows.append(dict(model=name,cohort=cohort,**chunk_metrics(held,pred,mask)))
     for row in rows:
         zero=next(x['mse'] for x in rows if x['model']=='zero_delta' and x['cohort']==row['cohort'])
         row['mse_relative_to_zero']=row['mse']/zero
@@ -122,5 +155,8 @@ def run(config_path):
     print(json.dumps({'status':'complete','selected':selected,'winner':winner,'cv_mse':cv}),flush=True)
 
 
+RESUME=False
+
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--config',required=True);run(p.parse_args().config)
+    p=argparse.ArgumentParser();p.add_argument('--config',required=True);p.add_argument('--resume-selection',action='store_true')
+    args=p.parse_args();RESUME=args.resume_selection;run(args.config)
