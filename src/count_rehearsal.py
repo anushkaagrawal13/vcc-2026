@@ -35,7 +35,7 @@ def run(config):
     from cell_eval2.run import metric_cohorts
     if version('cell-eval2')!=cfg['scorer_version']:raise ValueError('Scorer version mismatch')
     inputs=[]
-    for mf,paths in [(cfg['input_manifest'],[cfg['raw']]),(cfg['model_manifest'],[cfg['model_dir']+'/'+n for n in ['gbm_string_predictions.npz','model_state.npz']])]:
+    for mf,paths in [(cfg['input_manifest'],[cfg['raw'],cfg['cohorts']]),(cfg['model_manifest'],[cfg['model_dir']+'/'+n for n in ['gbm_string_predictions.npz','model_state.npz']])]:
         manifest=json.loads((ROOT/mf).read_text())
         for p in paths:
             record=next(r for r in manifest['files'] if r['path']==p)
