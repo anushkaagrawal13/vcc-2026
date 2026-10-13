@@ -1,0 +1,19 @@
+experiment: 005_count_rehearsal
+seed: 2026
+raw: data/raw/replogle_2022/rpe1_raw_singlecell_01.h5ad.gz
+input_manifest: results/001_replogle_pseudobulk/backup_manifest.json
+model_dir: data/processed/003_string_models
+model_manifest: results/003_string_models/backup_manifest_full.json
+cohorts: results/001_replogle_pseudobulk/cohorts.json
+artifact_dir: data/processed/005_count_rehearsal
+results_dir: results/005_count_rehearsal
+cells_per_target: 128
+fit_controls: 512
+score_controls: 256
+targets_per_cohort: 3
+selection: sha256_ascending_target_id_with_at_least_128_cells
+models: [zero_delta, training_mean, gbm_string]
+adapter: control_log_profile_transport_multinomial_with_outside_bucket
+normalization: 10000
+scorer_version: 0.16.0
+backend: pdex

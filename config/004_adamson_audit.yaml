@@ -1,0 +1,19 @@
+experiment: 004_adamson_audit
+accession: GSE90546
+assay_type: CRISPRi
+line: K562
+raw_dir: data/raw/adamson_2016
+results_dir: results/004_adamson_audit
+sources:
+  - sample: GSM2406675
+    prefix: GSM2406675_10X001
+    panel: pilot_TF
+  - sample: GSM2406677
+    prefix: GSM2406677_10X005
+    panel: epistasis_chemical_treatments
+  - sample: GSM2406681
+    prefix: GSM2406681_10X010
+    panel: UPR_single_target
+candidate_upr_controls: ['63(mod)_pBA580', 'Gal4-4(mod)_pBA582']
+control_mapping_status: candidate_only_not_confirmed_from_primary_guide_table
+pooling_decision: excluded_until_controls_and_conditions_are_verified
