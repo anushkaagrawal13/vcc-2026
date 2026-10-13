@@ -1,0 +1,19 @@
+{
+  "status": "complete_backed_up",
+  "tests_passed": 31,
+  "test_seconds": 4.23,
+  "source_commit": "7d2802dfc367115db1ed7a782417a6cc196db86e",
+  "predeclared_commit": "35dddf1",
+  "selection_reused_after_memory_failure": true,
+  "selection_sha256": "48e45b3edb4b9a65920dd1557adfddfb2b4e2dba3ec206b0dcef166a273c9b88",
+  "ec2_launched": false,
+  "artifact_count": 29,
+  "artifact_bytes": 503734598,
+  "manifest_uri": "s3://vcc-2026-artifacts-706098201643-us-east-2/public/replogle_2022/003_string_models/backup_manifest.json",
+  "manifest_sha256": "b1efd4767a297a13cf9b31deae8ffbf92358b3968301c640310307fe8b0bac0c",
+  "backup_completed_utc": "2026-10-13T01:07:08.829582+00:00",
+  "verification": "All 29 artifacts read back from S3 and SHA-256 matched; final manifest retrieved directly from S3. Local metrics JSON and CSV hashes exactly match the verified cloud reports.",
+  "runtime_note": "108.8 seconds and 1.19 GiB peak RSS for successful resumed phase; original five-fold CV ran in the earlier process.",
+  "official_rubric_score_computed": false,
+  "rpe1_holdout_status": "Repeated evaluation after experiment 002; no tuning or per-cohort model selection on RPE1."
+}

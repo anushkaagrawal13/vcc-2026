@@ -177,6 +177,11 @@ committed under `results/001_replogle_pseudobulk/`. The first K562 → RPE1 tran
 versus zero-delta 0.0113142 and training-mean 0.0104506. Ridge does not beat the
 mean-response baseline. These are public pseudobulk diagnostics, not official
 VCC metrics; see `results/002_ridge_transfer/` and `docs/002-ridge-transfer.md`.
+The next comparison is complete too: K562-selected STRING LightGBM achieves
+RPE1 MSE 0.0102680, 1.75% below the mean baseline overall, but 4.63% worse on
+unseen targets. See `results/003_string_models/` for all predeclared comparisons.
+All 31 tests passed, and models, predictions and annotations are backed up. No
+EC2 was launched for either modeling experiment.
 Reassess hosting
 costs after measuring actual runtime and storage needs; this is an initial
 project compute plan, not a commitment to an always-on server.
@@ -193,8 +198,9 @@ project compute plan, not a commitment to an always-on server.
 | 4. Freeze | configs + results | Ablations and final pipeline frozen by mid-October |
 
 One-feature ridge and the public transfer diagnostics are implemented in
-`src/models/ridge.py` and `src/transfer.py`; run `make transfer`. Richer features,
-LightGBM and single-cell count calibration remain planned. The nearest-line
+`src/models/ridge.py` and `src/transfer.py`; run `make transfer`. STRING neighbor-response features and low-rank LightGBM are implemented in
+`src/rich_transfer.py`; run `make rich-transfer`. Adamson integration and
+single-cell count calibration remain planned. The nearest-line
 comparator uses same-target K562 deltas and a training-mean fallback for unseen
 targets. Notebooks are for exploration, never the pipeline.
 
@@ -226,9 +232,10 @@ zero-score anchor.
    cohorts. Ridge improves over zero-delta but not the training-mean baseline.
    Unscaled same-target K562 transfer is worse than zero-delta overall. Treat
    further RPE1 evaluations as repeated holdout use; select changes on K562.
-4. Add Adamson CRISPRi, training-line expression and training-only GO/STRING priors;
-   compare LightGBM on exactly the same holdout. Exclude Norman 2019 CRISPRa unless
-   implementing and validating a separate assay task.
+4. Completed: fold-local STRING priors and low-rank ridge/LightGBM comparison.
+   LightGBM improves overall transfer but not unseen-target MSE versus the mean.
+   Next audit Adamson CRISPRi before pooling and add single-cell count calibration.
+   Exclude Norman 2019 CRISPRa unless validating a separate assay task.
 5. Ablate and freeze by mid-October. Test data arrive October 22; the final deadline
    is November 5, 2026, 23:59 UTC. Only the last final submission counts for prizes.
 

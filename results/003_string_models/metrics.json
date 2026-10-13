@@ -1,0 +1,261 @@
+{
+  "status": "complete",
+  "completed_utc": "2026-10-13T01:06:48.774239+00:00",
+  "source_commit": "7d2802dfc367115db1ed7a782417a6cc196db86e",
+  "config_sha256": "8b1f72c07f7010a448d24fdaf3e0bdf698cc502baa006cc5b74bfae5fd898148",
+  "frozen_selection_sha256": "48e45b3edb4b9a65920dd1557adfddfb2b4e2dba3ec206b0dcef166a273c9b88",
+  "selected": {
+    "training_mean": "training_mean",
+    "ridge_basal": "ridge_basal_1",
+    "ridge_string": "ridge_string_100",
+    "gbm_string": "gbm_string_15"
+  },
+  "cv_mse": {
+    "training_mean": 0.0035433491654733476,
+    "ridge_basal_1": 0.00345361082214709,
+    "ridge_basal_100": 0.003453682308258117,
+    "ridge_basal_1000": 0.0034653626212758273,
+    "ridge_string_1": 0.0030415844467273174,
+    "ridge_string_100": 0.003040140084731795,
+    "ridge_string_1000": 0.00308998123110978,
+    "gbm_string_7": 0.0028769042905821248,
+    "gbm_string_15": 0.0028579348592339777
+  },
+  "k562_selected_winner": "gbm_string",
+  "graph_qc": {
+    "targets": 2392,
+    "mapped_targets": 2390,
+    "ambiguous_proteins_skipped": 12,
+    "undirected_edges": 48627,
+    "isolated_targets": 237,
+    "score_threshold": 700,
+    "self_edges_removed": true,
+    "isoform_edge_reduction": "maximum score per undirected gene pair"
+  },
+  "sources": [
+    {
+      "name": "9606.protein.aliases.v12.0.txt.gz",
+      "url": "https://stringdb-static.org/download/protein.aliases.v12.0/9606.protein.aliases.v12.0.txt.gz",
+      "bytes": 19777800,
+      "sha256": "b65f730b993ed0c1bd72edf4565d3d425db42861101b29699704810e8f125680",
+      "license": "CC-BY-4.0",
+      "version": "12.0",
+      "checksum_type": "Computed SHA-256; no publisher hash supplied"
+    },
+    {
+      "name": "9606.protein.links.v12.0.txt.gz",
+      "url": "https://stringdb-static.org/download/protein.links.v12.0/9606.protein.links.v12.0.txt.gz",
+      "bytes": 83164437,
+      "sha256": "3e22f32572211aa341d5b4bd08d30c32e693e294603202120936872f87719d4f",
+      "license": "CC-BY-4.0",
+      "version": "12.0",
+      "checksum_type": "Computed SHA-256; no publisher hash supplied"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "data/processed/001_replogle_pseudobulk/K562_control_baseline.parquet",
+      "bytes": 288975,
+      "sha256": "e3b3e528784a0779ad6818e1680645542fd3e3f9b17f96edba8263b6ffcbdbb4"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/K562_matched_strata.parquet",
+      "bytes": 154211,
+      "sha256": "677f83035e05891a211e63f62513765e6f291ab0aab7e7e749d6f059508604f5"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/K562_pseudobulk.parquet",
+      "bytes": 1048180444,
+      "sha256": "ccd0f03e6d338d2bc184eb7062feca7df9110d1410694a8b5ac1dd4d062e1909"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/RPE1_control_baseline.parquet",
+      "bytes": 294889,
+      "sha256": "9f07f62f7a14282c852f1f063d5f4ab1393eebab5462e8b50a738c3193681d2f"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/RPE1_matched_strata.parquet",
+      "bytes": 195376,
+      "sha256": "5d547a95646d23679ce2747a6b0dae513268a2ba19355feef4207df1b591ad85"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/RPE1_pseudobulk.parquet",
+      "bytes": 1237369086,
+      "sha256": "c136a1c10eb89d979a5931c2631a5de382437b1db04d39328eeb8ad65d3c44fb"
+    }
+  ],
+  "metrics_scope": "Repeated RPE1 public pseudobulk diagnostics, not official VCC metrics; no RPE1-based selection",
+  "missing_basal_features": {
+    "K562": 189,
+    "RPE1": 283
+  },
+  "rows": [
+    {
+      "model": "zero_delta",
+      "cohort": "all_mapped",
+      "mse": 0.011314208994960282,
+      "mae": 0.0626751587102243,
+      "mean_target_pearson": null,
+      "pearson_defined_targets": 0,
+      "n_targets": 2390,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 1.0
+    },
+    {
+      "model": "zero_delta",
+      "cohort": "shared_targets",
+      "mse": 0.011828319715569526,
+      "mae": 0.06404005649635452,
+      "mean_target_pearson": null,
+      "pearson_defined_targets": 0,
+      "n_targets": 2055,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 1.0
+    },
+    {
+      "model": "zero_delta",
+      "cohort": "unseen_targets",
+      "mse": 0.008160485022267782,
+      "mae": 0.054302427514709026,
+      "mean_target_pearson": null,
+      "pearson_defined_targets": 0,
+      "n_targets": 335,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 1.0
+    },
+    {
+      "model": "training_mean",
+      "cohort": "all_mapped",
+      "mse": 0.010450634773600783,
+      "mae": 0.061257010392909705,
+      "mean_target_pearson": 0.2758973713539324,
+      "pearson_defined_targets": 2390,
+      "n_targets": 2390,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9236734780359667
+    },
+    {
+      "model": "training_mean",
+      "cohort": "shared_targets",
+      "mse": 0.010904782358368628,
+      "mae": 0.06249158488307142,
+      "mean_target_pearson": 0.2858190022399594,
+      "pearson_defined_targets": 2055,
+      "n_targets": 2055,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9219215087680415
+    },
+    {
+      "model": "training_mean",
+      "cohort": "unseen_targets",
+      "mse": 0.007664744365547321,
+      "mae": 0.05368372508758944,
+      "mean_target_pearson": 0.2150348296500947,
+      "pearson_defined_targets": 335,
+      "n_targets": 335,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.939251079394458
+    },
+    {
+      "model": "ridge_basal",
+      "cohort": "all_mapped",
+      "mse": 0.010434340277671074,
+      "mae": 0.06123723404932117,
+      "mean_target_pearson": 0.26512064662591084,
+      "pearson_defined_targets": 2390,
+      "n_targets": 2390,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9222332981756718
+    },
+    {
+      "model": "ridge_basal",
+      "cohort": "shared_targets",
+      "mse": 0.01087460748901275,
+      "mae": 0.06244607906375804,
+      "mean_target_pearson": 0.2759655778429544,
+      "pearson_defined_targets": 2055,
+      "n_targets": 2055,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9193704389558044
+    },
+    {
+      "model": "ridge_basal",
+      "cohort": "unseen_targets",
+      "mse": 0.007733596637948257,
+      "mae": 0.053821781796581515,
+      "mean_target_pearson": 0.19859427751837566,
+      "pearson_defined_targets": 335,
+      "n_targets": 335,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9476883563716298
+    },
+    {
+      "model": "ridge_string",
+      "cohort": "all_mapped",
+      "mse": 0.010394931112973148,
+      "mae": 0.06166741144255401,
+      "mean_target_pearson": 0.2362827690838357,
+      "pearson_defined_targets": 2390,
+      "n_targets": 2390,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9187501413137578
+    },
+    {
+      "model": "ridge_string",
+      "cohort": "shared_targets",
+      "mse": 0.010743118960036184,
+      "mae": 0.06262506849561081,
+      "mean_target_pearson": 0.25389839214917737,
+      "pearson_defined_targets": 2055,
+      "n_targets": 2055,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9082540224115772
+    },
+    {
+      "model": "ridge_string",
+      "cohort": "unseen_targets",
+      "mse": 0.00825903252875064,
+      "mae": 0.05579282862454883,
+      "mean_target_pearson": 0.12822275296659072,
+      "pearson_defined_targets": 335,
+      "n_targets": 335,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 1.0120761825080187
+    },
+    {
+      "model": "gbm_string",
+      "cohort": "all_mapped",
+      "mse": 0.010268021975902257,
+      "mae": 0.06118773279290608,
+      "mean_target_pearson": 0.2557804520916083,
+      "pearson_defined_targets": 2390,
+      "n_targets": 2390,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9075333485952017
+    },
+    {
+      "model": "gbm_string",
+      "cohort": "shared_targets",
+      "mse": 0.01063460831946364,
+      "mae": 0.0622279714961663,
+      "mean_target_pearson": 0.2695473144309398,
+      "pearson_defined_targets": 2055,
+      "n_targets": 2055,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.8990802223130127
+    },
+    {
+      "model": "gbm_string",
+      "cohort": "unseen_targets",
+      "mse": 0.008019260972861547,
+      "mae": 0.05480656701619054,
+      "mean_target_pearson": 0.17132999803988805,
+      "pearson_defined_targets": 335,
+      "n_targets": 335,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9826941598421084
+    }
+  ],
+  "elapsed_seconds": 108.7718938139999,
+  "peak_rss_bytes": 1275363328
+}

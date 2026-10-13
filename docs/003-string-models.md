@@ -52,3 +52,12 @@ Scientific computation has a 30-minute limit; no EC2 is launched. Back up report
 model state, predictions, exact STRING inputs, graph and config immediately,
 streaming each S3 object back to verify SHA-256. Retained objects incur storage
 charges. LightGBM is pinned to 4.6.0 in both environment manifests.
+
+The first execution completed all five K562 folds but was killed during full-data
+prediction generation. Recovery preserves the original frozen selection and
+configuration, writes predictions to disk in 128-target chunks, and evaluates in
+128-target chunks. Tests compare these paths with in-memory results. The cloud
+runner resumes an existing selection only when source receipts, config hash and
+axes match. Its reported elapsed time measures the successful resumed phase,
+not the earlier cross-validation attempt. Full prediction arrays remain in the
+ignored `work/003_predictions/` directory; compressed artifacts go to S3.

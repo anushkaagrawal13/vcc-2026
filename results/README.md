@@ -148,3 +148,56 @@ features and audit Adamson CRISPRi before pooling. Compare richer ridge and
 LightGBM against the training-mean baseline; pursue single-cell count generation
 and official metric calibration as a separate experiment. Any further RPE1
 evaluation is repeated use of this holdout and must be disclosed.
+
+## STRING priors + ridge / LightGBM — October 12
+
+**K562-selected LightGBM is best overall among the predeclared families:** RPE1
+MSE **0.0102680**, 1.75% below the mean-response baseline and 9.25% below zero
+delta. However, it is **4.63% worse than the mean baseline on unseen targets**.
+The gain is concentrated in shared targets; this is not uniform improvement in
+zero-shot generalization. These remain repeated public pseudobulk diagnostics,
+not the official single-cell rubric.
+
+| Model | K562 CV MSE | RPE1 all MSE | Shared MSE | Unseen MSE |
+|---|---:|---:|---:|---:|---:|
+| Zero delta | — | 0.0113142 | 0.0118283 | 0.0081605 |
+| K562 mean | 0.0035433 | 0.0104506 | 0.0109048 | 0.0076647 |
+| Basal-only low-rank ridge | 0.0034536 | 0.0104343 | 0.0108746 | 0.0077336 |
+| STRING low-rank ridge | 0.0030401 | 0.0103949 | 0.0107431 | 0.0082590 |
+| STRING low-rank LightGBM | 0.0028579 | 0.0102680 | 0.0106346 | 0.0080193 |
+
+Five K562-only folds selected alpha 1 for basal ridge, alpha 100 for STRING
+ridge, and 15 leaves for LightGBM (60 rounds). LightGBM improved CV MSE 19.34%
+over the mean baseline. All richer models predict 16 fold-local response
+components and reconstruct gene-level deltas. The basal ablation includes a
+missingness indicator and low-rank output; it is not identical to experiment 002.
+
+STRING v12.0 maps 2,390 of 2,392 unique panel targets, with 48,627 undirected
+gene pairs at combined score >=700 and 237 isolated targets. Twelve ambiguous
+protein mappings were discarded. Neighbor response priors exclude self and
+contain only training-fold labels; basis fitting, imputation and standardization
+are also fold-local. Isolated targets use the training-mean response prior.
+The single training-line expression mean duplicates K562 basal expression and
+was not added as an independent feature. Adamson remains a separate data audit.
+
+All settings and predictions were frozen before RPE1 outcomes were read.
+The overall model is selected by K562 CV; do not choose a mean/LightGBM switch
+per cohort from these RPE1 results. Further experiments need predeclared K562
+selection and additional independent validation before claiming broad transfer.
+
+**31 tests passed.** The initial full-prediction phase was killed after CV;
+the successful recovery preserved selections and used chunked on-disk prediction
+and evaluation. The resumed phase took 108.8 seconds with 1.19 GiB peak RSS.
+No EC2 was launched. All **29 artifacts / 503,734,598 bytes** were backed up and
+SHA-256 verified; the manifest was retrieved directly from S3 afterward.
+
+Committed evidence: `003_string_models/metrics.json`, `metrics.csv`, and
+`status.json`. Full frozen folds/axes, fitted models, predictions, graph and exact
+STRING sources are under `public/replogle_2022/003_string_models/` in the existing
+private S3 bucket. `status.json` pins the complete remote manifest by SHA-256.
+See `docs/003-string-models.md` for the predeclared design and recovery details.
+
+Next: audit Adamson CRISPRi condition/guide matching and expression scale; extend
+training-only validation for targets without measured neighbors. Separately build
+a count-generation adapter and evaluate dispersion/DE calibration using retained
+single cells. Do not present mean-delta MSE improvements as a VCC score improvement.
