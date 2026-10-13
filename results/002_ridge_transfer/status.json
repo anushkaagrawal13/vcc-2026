@@ -1,0 +1,12 @@
+{
+  "status": "complete_backed_up",
+  "tests_passed": 24,
+  "test_seconds": 4.48,
+  "source_commit": "0bf39de1f7794afdb1111b0964970bfd0d4b73a8",
+  "s3_prefix": "s3://vcc-2026-artifacts-706098201643-us-east-2/public/replogle_2022/002_ridge_transfer/",
+  "verified_artifacts": 6,
+  "artifact_bytes": 132934325,
+  "ec2_launched": false,
+  "official_rubric_score_computed": false,
+  "note": "Model, predictions and full frozen folds/axes are in S3; compact metrics, provenance and backup manifest are committed. Local metrics JSON and CSV hashes match the verified cloud artifacts."
+}

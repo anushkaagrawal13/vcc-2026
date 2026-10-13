@@ -1,0 +1,224 @@
+{
+  "status": "complete",
+  "completed_utc": "2026-10-13T00:50:19.950767+00:00",
+  "source_commit": "0bf39de1f7794afdb1111b0964970bfd0d4b73a8",
+  "config_sha256": "b767012e213a4317536ce6ed90046c99895946201860ecf934afa1e81ad7049f",
+  "inputs": [
+    {
+      "path": "data/processed/001_replogle_pseudobulk/K562_control_baseline.parquet",
+      "bytes": 288975,
+      "sha256": "e3b3e528784a0779ad6818e1680645542fd3e3f9b17f96edba8263b6ffcbdbb4"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/K562_matched_strata.parquet",
+      "bytes": 154211,
+      "sha256": "677f83035e05891a211e63f62513765e6f291ab0aab7e7e749d6f059508604f5"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/K562_pseudobulk.parquet",
+      "bytes": 1048180444,
+      "sha256": "ccd0f03e6d338d2bc184eb7062feca7df9110d1410694a8b5ac1dd4d062e1909"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/RPE1_control_baseline.parquet",
+      "bytes": 294889,
+      "sha256": "9f07f62f7a14282c852f1f063d5f4ab1393eebab5462e8b50a738c3193681d2f"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/RPE1_matched_strata.parquet",
+      "bytes": 195376,
+      "sha256": "5d547a95646d23679ce2747a6b0dae513268a2ba19355feef4207df1b591ad85"
+    },
+    {
+      "path": "data/processed/001_replogle_pseudobulk/RPE1_pseudobulk.parquet",
+      "bytes": 1237369086,
+      "sha256": "c136a1c10eb89d979a5931c2631a5de382437b1db04d39328eeb8ad65d3c44fb"
+    }
+  ],
+  "selected_alpha": 10.0,
+  "cv": [
+    {
+      "alpha": 0.01,
+      "mse": 0.0034665935678432555
+    },
+    {
+      "alpha": 0.1,
+      "mse": 0.003466593300043826
+    },
+    {
+      "alpha": 1.0,
+      "mse": 0.0034665906504932897
+    },
+    {
+      "alpha": 10.0,
+      "mse": 0.0034665669660959015
+    },
+    {
+      "alpha": 100.0,
+      "mse": 0.0034665807463529793
+    },
+    {
+      "alpha": 1000.0,
+      "mse": 0.00347640747486173
+    },
+    {
+      "alpha": 10000.0,
+      "mse": 0.0035225949751154406
+    }
+  ],
+  "training_preprocessing": {
+    "median": 0.43920391963666017,
+    "mean": 0.6683689408133665,
+    "scale": 0.7147869370242256
+  },
+  "frozen_model_sha256": "0e02f3b53c28a990565fa038653038dbf554386c4c3f004dfa8101f265ce1d7e",
+  "metrics_scope": "Public pseudobulk diagnostics on log1p CP10k deltas; NOT official six-metric VCC score",
+  "train_targets": 2057,
+  "held_targets": 2390,
+  "common_output_genes": 7226,
+  "unmapped_held_targets": [
+    "UNMAPPED:NEDD8-MDP1",
+    "UNMAPPED:PRSS50",
+    "UNMAPPED:RBM14-RBM4"
+  ],
+  "missing_feature_counts": {
+    "K562": 189,
+    "RPE1": 283
+  },
+  "rows": [
+    {
+      "model": "zero_delta",
+      "cohort": "all_mapped",
+      "mse": 0.011314208994960282,
+      "mae": 0.0626751587102243,
+      "mean_target_pearson": null,
+      "pearson_defined_targets": 0,
+      "n_targets": 2390,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 1.0
+    },
+    {
+      "model": "zero_delta",
+      "cohort": "shared_targets",
+      "mse": 0.011828319715569524,
+      "mae": 0.06404005649635452,
+      "mean_target_pearson": null,
+      "pearson_defined_targets": 0,
+      "n_targets": 2055,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 1.0
+    },
+    {
+      "model": "zero_delta",
+      "cohort": "unseen_targets",
+      "mse": 0.008160485022267782,
+      "mae": 0.05430242751470901,
+      "mean_target_pearson": null,
+      "pearson_defined_targets": 0,
+      "n_targets": 335,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 1.0
+    },
+    {
+      "model": "training_mean",
+      "cohort": "all_mapped",
+      "mse": 0.010450634773600784,
+      "mae": 0.061257010392909705,
+      "mean_target_pearson": 0.2758973713539324,
+      "pearson_defined_targets": 2390,
+      "n_targets": 2390,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9236734780359669
+    },
+    {
+      "model": "training_mean",
+      "cohort": "shared_targets",
+      "mse": 0.010904782358368625,
+      "mae": 0.06249158488307141,
+      "mean_target_pearson": 0.28581900223995943,
+      "pearson_defined_targets": 2055,
+      "n_targets": 2055,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9219215087680412
+    },
+    {
+      "model": "training_mean",
+      "cohort": "unseen_targets",
+      "mse": 0.007664744365547321,
+      "mae": 0.05368372508758944,
+      "mean_target_pearson": 0.2150348296500947,
+      "pearson_defined_targets": 335,
+      "n_targets": 335,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.939251079394458
+    },
+    {
+      "model": "ridge_one_feature",
+      "cohort": "all_mapped",
+      "mse": 0.010459371138185514,
+      "mae": 0.061335858208939095,
+      "mean_target_pearson": 0.2685248283240335,
+      "pearson_defined_targets": 2390,
+      "n_targets": 2390,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9244456367072996
+    },
+    {
+      "model": "ridge_one_feature",
+      "cohort": "shared_targets",
+      "mse": 0.010911367876883724,
+      "mae": 0.06258611671075263,
+      "mean_target_pearson": 0.2783261182461914,
+      "pearson_defined_targets": 2055,
+      "n_targets": 2055,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9224782673502794
+    },
+    {
+      "model": "ridge_one_feature",
+      "cohort": "unseen_targets",
+      "mse": 0.007686674726171119,
+      "mae": 0.05366636202617246,
+      "mean_target_pearson": 0.2084004976075129,
+      "pearson_defined_targets": 335,
+      "n_targets": 335,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.9419384638530969
+    },
+    {
+      "model": "nearest_line_same_target_else_mean",
+      "cohort": "all_mapped",
+      "mse": 0.011423339953970208,
+      "mae": 0.06794820121269318,
+      "mean_target_pearson": 0.20466820417729806,
+      "pearson_defined_targets": 2390,
+      "n_targets": 2390,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 1.0096454784473696
+    },
+    {
+      "model": "nearest_line_same_target_else_mean",
+      "cohort": "shared_targets",
+      "mse": 0.012036055049893163,
+      "mae": 0.07027355376836704,
+      "mean_target_pearson": 0.20297826766470103,
+      "pearson_defined_targets": 2055,
+      "n_targets": 2055,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 1.0175625396775672
+    },
+    {
+      "model": "nearest_line_same_target_else_mean",
+      "cohort": "unseen_targets",
+      "mse": 0.007664744365547321,
+      "mae": 0.05368372508758944,
+      "mean_target_pearson": 0.2150348296500947,
+      "pearson_defined_targets": 335,
+      "n_targets": 335,
+      "n_output_genes": 7226,
+      "mse_relative_to_zero": 0.939251079394458
+    }
+  ],
+  "elapsed_seconds": 95.60161450999999,
+  "peak_rss_bytes": 1758769152
+}

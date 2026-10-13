@@ -106,3 +106,45 @@ Next: restore the processed tables, freeze modeling choices on K562-only folds,
 and evaluate one-feature ridge plus zero-delta/nearest-line baselines on the
 separate shared-target and unseen-target RPE1 cohorts. These descriptive tables
 are not a single-cell rubric score.
+
+## K562 → RPE1 ridge transfer — October 12
+
+**First cross-line estimate:** ridge MSE **0.0104594**, versus zero-delta
+**0.0113142** (7.56% reduction) and training-mean **0.0104506** (7.63% reduction).
+**Ridge does not beat the training-mean baseline.** These are public pseudobulk
+diagnostics, not the official VCC rubric or a leaderboard score.
+
+| Model | All mapped MSE | Shared-target MSE | Unseen-target MSE |
+|---|---:|---:|---:|
+| Zero delta | 0.0113142 | 0.0118283 | 0.0081605 |
+| K562 mean response | 0.0104506 | 0.0109048 | 0.0076647 |
+| One-feature ridge | 0.0104594 | 0.0109114 | 0.0076867 |
+| Same-target K562 / mean fallback | 0.0114233 | 0.0120361 | 0.0076647 |
+
+The evaluation includes 2,390 mapped RPE1 targets: 2,055 shared and 335 unseen,
+over 7,226 common output genes. The same-target transfer comparator has only one
+source line available; unseen targets explicitly fall back to the K562 mean.
+The three unmapped targets are excluded from this gene-ID-based experiment.
+
+Ridge alpha **10** was selected using five seeded K562-only target folds.
+Each fold fits its own median imputer and standardizer. The target basal-expression
+feature is missing for 189 K562 targets and 283 RPE1 targets; these are imputed
+using training statistics, not dropped or treated as measured zero expression.
+All settings and predictions were frozen before RPE1 outcomes were loaded.
+
+**24 tests passed** in pinned Linux. Six inputs matched experiment 001 hashes.
+The run took **95.6 seconds**, peaked at **1.64 GiB RSS**, and ran in CloudShell
+without EC2. Six output artifacts (~133 MB) passed S3 SHA-256 read-back checks.
+See `002_ridge_transfer/metrics.json`, `metrics.csv`, `backup_manifest.json`, and
+`status.json`. Full fold/axis metadata, coefficients and predictions are retained
+under `public/replogle_2022/002_ridge_transfer/` in the existing private S3 bucket.
+
+Interpretation: a generic K562 response transfers better than this one-feature
+model or unscaled same-target copying by MSE. This does not establish why, nor
+prove that richer features will help. Do not tune on these RPE1 outcomes.
+
+Next: predeclare K562-only model comparisons, add training-only biological
+features and audit Adamson CRISPRi before pooling. Compare richer ridge and
+LightGBM against the training-mean baseline; pursue single-cell count generation
+and official metric calibration as a separate experiment. Any further RPE1
+evaluation is repeated use of this holdout and must be disclosed.

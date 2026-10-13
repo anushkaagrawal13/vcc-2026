@@ -1,0 +1,37 @@
+{
+  "status": "complete_backed_up",
+  "files": [
+    {
+      "path": "results/002_ridge_transfer/metrics.csv",
+      "bytes": 1524,
+      "sha256": "7c1f72c65612f440368d2044c8df6a8220d6795a61881e8b6a0939c2e9b4430a"
+    },
+    {
+      "path": "results/002_ridge_transfer/metrics.json",
+      "bytes": 6707,
+      "sha256": "08162fcdfabd24eb40b4413380a29621fe1fca55eefffc348d2265ecaf1f6031"
+    },
+    {
+      "path": "results/002_ridge_transfer/frozen_model.json",
+      "bytes": 329872,
+      "sha256": "0e02f3b53c28a990565fa038653038dbf554386c4c3f004dfa8101f265ce1d7e"
+    },
+    {
+      "path": "data/processed/002_ridge_transfer/ridge.npz",
+      "bytes": 137850,
+      "sha256": "2f55a14e58f26cf0140c1a5509899e1bb5c6c3f6fea1fcbe8f069b5efaeef337"
+    },
+    {
+      "path": "data/processed/002_ridge_transfer/ridge_predictions.npz",
+      "bytes": 132458069,
+      "sha256": "9bdcd029eb0a499bd89558f119bc50e5b91b583f30500a7cdbca91ec041b495b"
+    },
+    {
+      "path": "config/002_ridge_transfer.yaml",
+      "bytes": 303,
+      "sha256": "b767012e213a4317536ce6ed90046c99895946201860ecf934afa1e81ad7049f"
+    }
+  ],
+  "execution_environment": "AWS CloudShell; no EC2 launched",
+  "completed_utc": "2026-10-13T00:50:30.069670+00:00"
+}

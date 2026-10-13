@@ -173,8 +173,10 @@ The null submission and Replogle pseudobulk gates are complete. K562 (310,385
 cells) and RPE1 (247,914 cells) produced 38,550,448 tidy rows, backed up in private
 S3 with SHA-256 read-back verification. All 20 tests passed in CloudShell; no
 EC2 was launched for this step. QC, cohort counts and the backup manifest are
-committed under `results/001_replogle_pseudobulk/`. The next milestone is the
-K562 → RPE1 transfer experiment; no trained-model result is claimed yet.
+committed under `results/001_replogle_pseudobulk/`. The first K562 → RPE1 transfer experiment is also complete: ridge MSE 0.0104594
+versus zero-delta 0.0113142 and training-mean 0.0104506. Ridge does not beat the
+mean-response baseline. These are public pseudobulk diagnostics, not official
+VCC metrics; see `results/002_ridge_transfer/` and `docs/002-ridge-transfer.md`.
 Reassess hosting
 costs after measuring actual runtime and storage needs; this is an initial
 project compute plan, not a commitment to an always-on server.
@@ -190,9 +192,11 @@ project compute plan, not a commitment to an always-on server.
 | 3. Expansion | `src/models/gbm.py` | Adamson + remaining features + LightGBM, same validation split |
 | 4. Freeze | configs + results | Ablations and final pipeline frozen by mid-October |
 
-Later-stage modules intentionally contain design contracts, not working models.
-Do not mistake them for implemented training or evaluation. Nearest-line remains
-a planned Session 2 comparator. Notebooks are for exploration, never the pipeline.
+One-feature ridge and the public transfer diagnostics are implemented in
+`src/models/ridge.py` and `src/transfer.py`; run `make transfer`. Richer features,
+LightGBM and single-cell count calibration remain planned. The nearest-line
+comparator uses same-target K562 deltas and a training-mean fallback for unseen
+targets. Notebooks are for exploration, never the pipeline.
 
 ## What the official schema changes
 
@@ -218,10 +222,10 @@ zero-score anchor.
    are backed up and verified. Three RPE1 targets with missing Ensembl IDs are
    preserved as unmapped groups. Keep RPE1 perturbation outcomes out of feature
    fitting, priors, scaling and hyperparameter selection.
-3. Fit ridge on K562 using target-gene baseline expression. Freeze choices on
-   K562-only folds; report shared-target and unseen-target RPE1 cohorts, zero-delta
-   and nearest-line comparators. This is a transfer estimate for that pair, not a
-   guarantee for the three anonymous challenge contexts.
+3. Completed: one-feature ridge, K562-only alpha selection and separate RPE1
+   cohorts. Ridge improves over zero-delta but not the training-mean baseline.
+   Unscaled same-target K562 transfer is worse than zero-delta overall. Treat
+   further RPE1 evaluations as repeated holdout use; select changes on K562.
 4. Add Adamson CRISPRi, training-line expression and training-only GO/STRING priors;
    compare LightGBM on exactly the same holdout. Exclude Norman 2019 CRISPRa unless
    implementing and validating a separate assay task.
