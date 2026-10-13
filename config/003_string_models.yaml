@@ -1,0 +1,22 @@
+experiment: 003_string_models
+input_dir: data/processed/001_replogle_pseudobulk
+input_manifest: results/001_replogle_pseudobulk/backup_manifest.json
+results_dir: results/003_string_models
+artifact_dir: data/processed/003_string_models
+raw_dir: data/raw/string_v12
+folds: 5
+seed: 2026
+rank: 16
+ridge_alphas: [1, 100, 1000]
+gbm_leaves: [7, 15]
+gbm_rounds: 60
+gbm_learning_rate: 0.05
+gbm_min_data: 40
+string_score_threshold: 700
+sources:
+  - name: 9606.protein.aliases.v12.0.txt.gz
+    url: https://stringdb-static.org/download/protein.aliases.v12.0/9606.protein.aliases.v12.0.txt.gz
+    bytes: 19777800
+  - name: 9606.protein.links.v12.0.txt.gz
+    url: https://stringdb-static.org/download/protein.links.v12.0/9606.protein.links.v12.0.txt.gz
+    bytes: 83164437

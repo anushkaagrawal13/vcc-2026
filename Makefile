@@ -27,3 +27,7 @@ pseudobulk:
 .PHONY: transfer
 transfer:
 	$(PYTHON) -m src.transfer --config config/002_ridge_transfer.yaml
+
+.PHONY: rich-transfer
+rich-transfer:
+	$(PYTHON) -m src.rich_transfer --config config/003_string_models.yaml
