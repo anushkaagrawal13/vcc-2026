@@ -3,6 +3,15 @@
 CPU-first experiments for the 2026 Virtual Cell Challenge. Start with a real
 schema round-trip; only then build public-data pseudobulk models.
 
+## Current next experiment
+
+Experiment 006 implements K562-only control calibration with disjoint, batch-balanced
+fit/calibration/audit splits. Ten targeted tests passed locally. **The real K562
+run is pending** because this turn had no CloudShell browser control or local AWS
+credentials. The [bounded launcher and run plan](docs/006-k562-control-calibration.md)
+restore only the verified K562 archive, enforce a 45-minute cap and back up results.
+No calibrated generator has yet been selected from real data.
+
 ## Latest completed work
 
 - Experiment 004: audited all three Adamson CRISPRi panels. Keep them separate;

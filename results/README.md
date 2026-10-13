@@ -222,3 +222,10 @@ These are unscaled public-data diagnostics, not leaderboard scores. Small-panel
 PDS and metric-specific DE gates limit interpretation. See
 `docs/005-count-rehearsal.md`, exact per-target CSVs and cohort counts for details.
 The approximate count adapter needs K562-only calibration before challenge use.
+
+## 006: K562 control calibration — pending execution
+
+Code, experiment config and bounded CloudShell launcher are prepared. Ten targeted
+local tests passed; real K562 metrics and a selected generator do not yet exist.
+See `006_k562_control_calibration_readiness.json` for the verification boundary and
+`docs/006-k562-control-calibration.md` for the exact predeclared split and command.

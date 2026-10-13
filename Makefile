@@ -31,3 +31,7 @@ transfer:
 .PHONY: rich-transfer
 rich-transfer:
 	$(PYTHON) -m src.rich_transfer --config config/003_string_models.yaml
+
+.PHONY: control-calibration
+control-calibration:
+	$(PYTHON) -m src.control_calibration --config config/006_k562_control_calibration.yaml

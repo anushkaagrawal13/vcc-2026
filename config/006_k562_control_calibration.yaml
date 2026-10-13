@@ -1,0 +1,25 @@
+experiment: 006_k562_control_calibration
+seed: 20261013
+raw: data/raw/replogle_2022/K562_essential_raw_singlecell_01.h5ad.gz
+input_manifest: results/001_replogle_pseudobulk/backup_manifest.json
+artifact_dir: data/processed/006_k562_control_calibration
+results_dir: results/006_k562_control_calibration
+expected_batches: 48
+fit_per_batch: 12
+calibration_per_batch: 4
+audit_per_batch: 4
+normalization: 10000
+mc_seed: 71001
+mc_cells_per_batch: 12
+evaluation_cells_per_batch: 4
+evaluation_seeds: [72001, 72002, 72003]
+learning_rate: 0.5
+maximum_step: 0.25
+maximum_offset: 4.0
+candidates:
+  - name: legacy
+    iterations: 0
+  - name: mean_calibrated_8
+    iterations: 8
+  - name: mean_calibrated_16
+    iterations: 16
