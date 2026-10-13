@@ -1,0 +1,355 @@
+{
+  "status": "metadata_audit_complete_pooling_blocked",
+  "assay_type": "CRISPRi",
+  "line": "K562",
+  "panels": [
+    {
+      "sample": "GSM2406675",
+      "prefix": "GSM2406675_10X001",
+      "panel": "pilot_TF",
+      "identity_rows": 5758,
+      "expression_barcodes": 5768,
+      "unique_expression_barcodes": 5768,
+      "genes": 35635,
+      "unique_gene_ids": 35635,
+      "unique_gene_symbols": 32938,
+      "guide_identities": {
+        "*": 6,
+        "62(mod)_pBA581": 1769,
+        "BHLHE40_pDS258": 553,
+        "CREB1_pDS269": 506,
+        "DDIT3_pDS263": 477,
+        "EP300_pDS268": 632,
+        "SNAI1_pDS266": 562,
+        "SPI1_pDS255": 696,
+        "ZNF326_pDS262": 557
+      },
+      "good_coverage": {
+        "TRUE": 5680,
+        "FALSE": 78
+      },
+      "number_of_cells": {
+        "1": 5322,
+        "2": 341,
+        "3": 16,
+        "4": 2,
+        "0": 76,
+        "5": 1
+      },
+      "identity_barcodes_absent_from_matrix": 0,
+      "expression_barcodes_without_identity": 10,
+      "duplicate_identity_barcodes": 0,
+      "conservative_eligible_assignment_rows": 5321,
+      "conservative_filter": "good coverage TRUE, number of cells == 1, unique assignment barcode, barcode in expression matrix",
+      "candidate_control_rows_by_gem": {}
+    },
+    {
+      "sample": "GSM2406677",
+      "prefix": "GSM2406677_10X005",
+      "panel": "epistasis_chemical_treatments",
+      "identity_rows": 14856,
+      "expression_barcodes": 15006,
+      "unique_expression_barcodes": 15006,
+      "genes": 32738,
+      "unique_gene_ids": 32738,
+      "unique_gene_symbols": 32643,
+      "guide_identities": {
+        "*": 14,
+        "3x_neg_ctrl_pMJ144-1": 1730,
+        "3x_neg_ctrl_pMJ144-2": 1667,
+        "ATF4_pBA576": 1,
+        "ATF6_IRE1_pMJ152": 1462,
+        "ATF6_PERK_IRE1_pMJ158": 1711,
+        "ATF6_PERK_pMJ150": 1617,
+        "ATF6_only_pMJ145": 1709,
+        "C7orf26_pDS004": 2,
+        "Gal4-4(mod)_pBA582": 1,
+        "IER3IP1_pDS003": 3,
+        "IRE1_only_pMJ148": 1703,
+        "PERK_IRE1_pMJ154": 1647,
+        "PERK_only_pMJ146": 1574,
+        "PSMA1_pDS007": 4,
+        "PSMD12_pDS009": 6,
+        "SNAI1_pDS266": 1,
+        "XBP1_pBA578": 2,
+        "XBP1_pBA579": 1,
+        "YIPF5_pDS001": 1
+      },
+      "good_coverage": {
+        "True": 14294,
+        "False": 562
+      },
+      "number_of_cells": {
+        "1": 13525,
+        "2": 735,
+        "3": 30,
+        "0": 562,
+        "7": 1,
+        "4": 2,
+        "5": 1
+      },
+      "identity_barcodes_absent_from_matrix": 44,
+      "expression_barcodes_without_identity": 194,
+      "duplicate_identity_barcodes": 0,
+      "conservative_eligible_assignment_rows": 13503,
+      "conservative_filter": "good coverage TRUE, number of cells == 1, unique assignment barcode, barcode in expression matrix",
+      "candidate_control_rows_by_gem": {}
+    },
+    {
+      "sample": "GSM2406681",
+      "prefix": "GSM2406681_10X010",
+      "panel": "UPR_single_target",
+      "identity_rows": 65257,
+      "expression_barcodes": 65337,
+      "unique_expression_barcodes": 65337,
+      "genes": 32738,
+      "unique_gene_ids": 32738,
+      "unique_gene_symbols": 32643,
+      "guide_identities": {
+        "*": 112,
+        "62(mod)_pBA581": 2,
+        "63(mod)_pBA580": 6284,
+        "AARS_pDS381": 466,
+        "AMIGO3_pDS434": 750,
+        "ARHGAP22_pDS458": 513,
+        "ASCC3_pDS051": 639,
+        "ASCC3_pDS052": 1185,
+        "ATF4_pBA576": 6,
+        "ATF4_pBA577": 23,
+        "ATF4_pBA608": 353,
+        "ATF6_pBA586": 11,
+        "ATP5B_pDS055": 670,
+        "C7orf26_pDS004": 14,
+        "CAD_pDS468": 295,
+        "CARS_pDS460": 522,
+        "CCND3_pDS005": 19,
+        "CCND3_pDS006": 393,
+        "CHERP_pDS024": 497,
+        "COPB1_pDS065": 235,
+        "COPZ1_pDS462": 291,
+        "DAD1_pDS499": 774,
+        "DARS_pDS495": 689,
+        "DDOST_pDS382": 398,
+        "DDRGK1_pDS041": 633,
+        "DERL2_pDS042": 676,
+        "DHDDS_pDS383": 526,
+        "DNAJC19_pDS026": 1042,
+        "DNAJC19_pDS074": 546,
+        "EIF2AK3_pBA572": 152,
+        "EIF2AK3_pBA573": 21,
+        "EIF2B2_pDS463": 638,
+        "EIF2B3_pDS508": 427,
+        "EIF2B4_pDS491": 654,
+        "EIF2S1_pDS386": 534,
+        "ERN1_pBA574": 42,
+        "ERN1_pBA575": 46,
+        "FARSB_pDS390": 655,
+        "FECH_pDS494": 702,
+        "GBF1_pDS043": 797,
+        "GBF1_pDS044": 215,
+        "GMPPB_pDS391": 634,
+        "GNPNAT1_pDS506": 514,
+        "Gal4-4(mod)_pBA582": 1343,
+        "HARS_pDS466": 340,
+        "HSD17B12_pDS087": 421,
+        "HSPA5_pDS017": 929,
+        "HSPA5_pDS371": 313,
+        "HSPA9_pDS088": 926,
+        "HYOU1_pDS089": 514,
+        "IARS2_pDS090": 450,
+        "IARS2_pDS091": 692,
+        "IDH3A_pDS393": 690,
+        "IER3IP1_pDS002": 1276,
+        "IER3IP1_pDS003": 32,
+        "IER3IP1_pDS110": 604,
+        "KCTD16_pDS096": 480,
+        "MANF_pDS027": 578,
+        "MARS_pDS394": 543,
+        "MRGBP_pDS124": 586,
+        "MRPL39_pDS498": 712,
+        "MTHFD1_pDS395": 540,
+        "NEDD8_pDS396": 518,
+        "OST4_pDS353": 669,
+        "P4HB_pDS397": 578,
+        "PDIA6_pDS029": 618,
+        "PPWD1_pDS398": 241,
+        "PSMA1_pDS007": 30,
+        "PSMD12_pDS008": 52,
+        "PSMD12_pDS009": 11,
+        "PSMD4_pDS488": 639,
+        "PTDSS1_pDS478": 557,
+        "QARS_pDS510": 390,
+        "SAMM50_pDS156": 838,
+        "SARS_pDS467": 484,
+        "SCYL1_pDS159": 580,
+        "SCYL1_pDS160": 688,
+        "SEC61A1_pDS031": 470,
+        "SEC61A1_pDS032": 758,
+        "SEC61B_pDS033": 1247,
+        "SEC61B_pDS162": 513,
+        "SEC61G_pDS440": 674,
+        "SEC63_pDS218": 684,
+        "SEL1L_pDS373": 464,
+        "SLC35B1_pDS046": 644,
+        "SLC39A7_pDS219": 626,
+        "SLMO2_pDS433": 659,
+        "SOCS1_pDS479": 462,
+        "SPCS2_pDS401": 612,
+        "SPCS3_pDS402": 672,
+        "SRP68_pDS403": 729,
+        "SRP72_pDS505": 541,
+        "SRPRB_pDS404": 732,
+        "SRPR_pDS482": 617,
+        "STT3A_pDS010": 1,
+        "STT3A_pDS011": 522,
+        "SYVN1_pDS442": 676,
+        "TARS_pDS405": 830,
+        "TELO2_pDS496": 711,
+        "TIMM23_pDS284": 789,
+        "TIMM44_pDS430": 605,
+        "TMED10_pDS036": 649,
+        "TMED2_pDS175": 534,
+        "TMEM167A_pDS038": 488,
+        "TTI1_pDS407": 542,
+        "TTI2_pDS408": 682,
+        "UFL1_pDS410": 611,
+        "UFM1_pDS040": 723,
+        "XBP1_pBA578": 28,
+        "XBP1_pBA579": 38,
+        "XRN1_pDS411": 810,
+        "YIPF5_pDS001": 10,
+        "YIPF5_pDS186": 860,
+        "YIPF5_pDS226": 587
+      },
+      "good_coverage": {
+        "TRUE": 59219,
+        "FALSE": 6038
+      },
+      "number_of_cells": {
+        "1": 50613,
+        "2": 7636,
+        "3": 994,
+        "4": 129,
+        "5": 15,
+        "0": 5866,
+        "6": 2,
+        "9": 2
+      },
+      "identity_barcodes_absent_from_matrix": 0,
+      "expression_barcodes_without_identity": 80,
+      "duplicate_identity_barcodes": 0,
+      "conservative_eligible_assignment_rows": 50467,
+      "conservative_filter": "good coverage TRUE, number of cells == 1, unique assignment barcode, barcode in expression matrix",
+      "candidate_control_rows_by_gem": {
+        "1": {
+          "63(mod)_pBA580": 430,
+          "Gal4-4(mod)_pBA582": 46
+        },
+        "10": {
+          "63(mod)_pBA580": 606,
+          "Gal4-4(mod)_pBA582": 80
+        },
+        "2": {
+          "63(mod)_pBA580": 467,
+          "Gal4-4(mod)_pBA582": 82
+        },
+        "3": {
+          "63(mod)_pBA580": 413,
+          "Gal4-4(mod)_pBA582": 60
+        },
+        "4": {
+          "63(mod)_pBA580": 493,
+          "Gal4-4(mod)_pBA582": 65
+        },
+        "5": {
+          "63(mod)_pBA580": 428,
+          "Gal4-4(mod)_pBA582": 76
+        },
+        "6": {
+          "63(mod)_pBA580": 543,
+          "Gal4-4(mod)_pBA582": 88
+        },
+        "7": {
+          "Gal4-4(mod)_pBA582": 45,
+          "63(mod)_pBA580": 323
+        },
+        "8": {
+          "63(mod)_pBA580": 422,
+          "Gal4-4(mod)_pBA582": 54
+        },
+        "9": {
+          "63(mod)_pBA580": 470,
+          "Gal4-4(mod)_pBA582": 50
+        }
+      }
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406675/suppl/GSM2406675_10X001_cell_identities.csv.gz",
+      "path": "data/raw/adamson_2016/GSM2406675_10X001_cell_identities.csv.gz",
+      "bytes": 79684,
+      "sha256": "e0e719dfba62a3651b5ccde1d318973e5a80bba1863dbc98c104ea74ac6f5f34"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406675/suppl/GSM2406675_10X001_barcodes.tsv.gz",
+      "path": "data/raw/adamson_2016/GSM2406675_10X001_barcodes.tsv.gz",
+      "bytes": 22300,
+      "sha256": "b44a3d466b03cafe7479ed98b3f6aa9becc9ce3651f17b49f7f77ca03d72cd32"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406675/suppl/GSM2406675_10X001_genes.tsv.gz",
+      "path": "data/raw/adamson_2016/GSM2406675_10X001_genes.tsv.gz",
+      "bytes": 276960,
+      "sha256": "543e3571b2ca4739ed00231c22dad9471a3fca9841f20beecc137700896a6535"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406677/suppl/GSM2406677_10X005_cell_identities.csv.gz",
+      "path": "data/raw/adamson_2016/GSM2406677_10X005_cell_identities.csv.gz",
+      "bytes": 184186,
+      "sha256": "fc9cb6314594345057c1b937fa0c7947399f073196a3104963da609be7b74d14"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406677/suppl/GSM2406677_10X005_barcodes.tsv.gz",
+      "path": "data/raw/adamson_2016/GSM2406677_10X005_barcodes.tsv.gz",
+      "bytes": 58348,
+      "sha256": "0525bc03ebd7ba7c0b7a777ff9a739330fdaa092568363c9e0e7b85ebce15895"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406677/suppl/GSM2406677_10X005_genes.tsv.gz",
+      "path": "data/raw/adamson_2016/GSM2406677_10X005_genes.tsv.gz",
+      "bytes": 257091,
+      "sha256": "a804084f5c41b55746aea5c932935937f0580aa375b205ecd75f445cb54fd5ad"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406681/suppl/GSM2406681_10X010_cell_identities.csv.gz",
+      "path": "data/raw/adamson_2016/GSM2406681_10X010_cell_identities.csv.gz",
+      "bytes": 808896,
+      "sha256": "8b40be7a2280c1713bf5a1eb828aad46e70ad3a7000b5f5a1322e51e06c4cf7f"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406681/suppl/GSM2406681_10X010_barcodes.tsv.gz",
+      "path": "data/raw/adamson_2016/GSM2406681_10X010_barcodes.tsv.gz",
+      "bytes": 249427,
+      "sha256": "1e0d820343d0c6e17bdab4fef96f4446e223b94861942ccf3d7225818e009836"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2406nnn/GSM2406681/suppl/GSM2406681_10X010_genes.tsv.gz",
+      "path": "data/raw/adamson_2016/GSM2406681_10X010_genes.tsv.gz",
+      "bytes": 257091,
+      "sha256": "e9c8a7eab0c23d98d1affa18f8ba8ffd2c63d43070a4a712546e72152c6d6bce"
+    }
+  ],
+  "pooling_decision": "excluded_until_controls_and_conditions_are_verified",
+  "blocking_items": [
+    "Primary guide-table confirmation of UPR non-targeting controls",
+    "UPR condition/time metadata confirmation",
+    "Expression matrix integer/count and matched-control QC before training"
+  ],
+  "notes": [
+    "Epistasis panel contains combinations and DMSO/tunicamycin/thapsigargin; excluded",
+    "Guide identity UMI count is guide capture support, not RNA library size",
+    "No Adamson cells have been pooled into Replogle models; Norman CRISPRa remains excluded"
+  ],
+  "primary_analysis": "https://github.com/thomasmaxwellnorman/perturbseq_demo/blob/master/perturbseq_demo.ipynb"
+}

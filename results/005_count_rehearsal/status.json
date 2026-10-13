@@ -1,0 +1,21 @@
+{
+  "status": "complete_backed_up",
+  "tests_passed": 34,
+  "test_seconds": 3.5,
+  "experiment_seconds": 107.51565187599999,
+  "source_commit": "c2a8e95",
+  "ec2_launched": false,
+  "running_or_pending_ec2_in_us_east_2_at_verification": 0,
+  "artifact_count": 20,
+  "artifact_bytes": 23146466,
+  "manifest_uri": "s3://vcc-2026-artifacts-706098201643-us-east-2/public/replogle_2022/005_count_rehearsal/backup_manifest.json",
+  "manifest_sha256": "85473127568667b4cc45e8e7cf7f8c3acd2e9b25e0281655b32aa6ae0d0b8399",
+  "metrics_sha256": "930e5d68a5af7c59c51766c6676e85959bdcd861d543e6248e9e726e696ee39b",
+  "selection_sha256": "b3fdb0f6c60510c2af8791bae4013bc6bbcecf2e673e921300dc6f7647b6e6ce",
+  "backup_completed_utc": "2026-10-13T01:26:33.710745+00:00",
+  "verification": "All 20 artifacts read back and SHA-256 matched; final manifest retrieved from S3; local exact report bundle SHA-256 matched the cloud bundle and metrics matched the final manifest.",
+  "official_raw_metrics_computed": true,
+  "scaled_challenge_score_computed": false,
+  "leaderboard_submitted": false,
+  "recovery_note": "Initial attempt passed tests then stopped before sampling because cohort metadata were absent. Restored and verified the cohort file; reran unchanged scientific configuration successfully."
+}

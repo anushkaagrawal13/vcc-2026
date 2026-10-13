@@ -3,6 +3,21 @@
 CPU-first experiments for the 2026 Virtual Cell Challenge. Start with a real
 schema round-trip; only then build public-data pseudobulk models.
 
+## Latest completed work
+
+- Experiment 004: audited all three Adamson CRISPRi panels. Keep them separate;
+  UPR control/condition provenance is not yet sufficient for training.
+- Experiment 005: generated fresh single-cell counts and ran the pinned official
+  scorer on six predetermined public RPE1 targets; 34 tests passed. The LightGBM
+  pseudobulk gain did not translate into better expression error or PDS here.
+- Next: calibrate and ablate the count generator on K562-only splits, freeze it,
+  then run a broader predeclared transfer check. No additional leaderboard
+  submission is justified by this small diagnostic.
+
+See [count rehearsal](docs/005-count-rehearsal.md) and
+[Adamson audit](docs/004-adamson-audit.md). Exact summaries are committed under
+`results/`; full rehearsal artifacts are verified in private S3.
+
 ## Initial project plan
 
 Build a reproducible, CPU-first pipeline that transfers CRISPRi responses across

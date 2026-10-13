@@ -201,3 +201,24 @@ Next: audit Adamson CRISPRi condition/guide matching and expression scale; exten
 training-only validation for targets without measured neighbors. Separately build
 a count-generation adapter and evaluate dispersion/DE calibration using retained
 single cells. Do not present mean-delta MSE improvements as a VCC score improvement.
+
+## 004 and 005: provenance audit and raw-count rehearsal
+
+Adamson metadata were audited separately; its UPR control identities and
+conditions still require primary confirmation, so it remains excluded.
+Experiment 005 successfully generated fresh counts and ran the official six
+raw metrics on six predetermined RPE1 targets (three shared, three unseen).
+
+| Raw metric | Zero delta | Training mean | LightGBM |
+|---|---:|---:|---:|
+| PDS cosine ↑ | 0.56667 | 0.53333 | 0.50000 |
+| Expression error ↓ | 4.54529 | 4.93668 | 4.78661 |
+| DE direction fidelity/yield ↑ | 0.70524 | 0.69566 | 0.69759 |
+| DE direction reach ↑ | 0.14152 | 0.18818 | 0.07000 |
+| DE Jaccard ↑ | 0.00226 | 0.00412 | 0.00291 |
+| DE LFC NMAE ↓ | 0.94046 | 0.93999 | 0.95066 |
+
+These are unscaled public-data diagnostics, not leaderboard scores. Small-panel
+PDS and metric-specific DE gates limit interpretation. See
+`docs/005-count-rehearsal.md`, exact per-target CSVs and cohort counts for details.
+The approximate count adapter needs K562-only calibration before challenge use.
